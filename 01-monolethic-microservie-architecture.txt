@@ -1,0 +1,62 @@
+Spring-boot
+===========
+
+								Monolithic architecture
+								========================
+1 : Monolithic Application?
+--> Monolithic application has " single code base with mutiple module" and has a single deployable binary.
+--> A monolithic application is built as a single unit.
+--> module are dependent on each other
+Example : real world example is " Airpplane".
+	--> flight itSelf is a single unit but it can have mutiple module.
+	--> moduel : 1 : cockpit
+				 2 : jet Engine
+				 3 : cargo bay
+				 4 : crew cabin
+
+
+2 : disadvantages of Monolithic architecture?
+--> Even a small change would require you to test the entire application.
+--> Complexity in handling the data
+--> if one module goes down the entire application would crash
+--> very difficult to adapt to new technologies.
+
+								Microservice architecture
+								========================
+1 : what a Microservice architecture?
+--> Microservice architecture is a collection of services [module] that are highly maintainable and testable.
+--> serviceses are Lossely coupled								
+--> services are indepently deployable.
+--> module a  re indepently on each other.
+Example : real world example is "train".
+--> train module :
+		1: Engine
+		2 : Load carrier
+		3 : crow compartment
+		4 : goods carrier
+		5 : wheel base
+	
+
+2 : disadvantages of Monolithic architecture?	
+--> Microservice comes with a lots of complexity.[ one large application split into small services ]
+--> Microservice are more expensive.
+--> Microservice are difficult to test.[because it is dependent to other service]
+--> Difficult to debug.[ beacuse of dependent services ]
+
+
+							Setting up the environment for microservices
+							============================================
+1 : step to Setting up the environment for microservices
+--> latest JDK
+--> IDE [ Eclipse , intelliji]
+--> Maven / Gradele : project management tool
+--> Postman
+
+		
+3 : Advantages of Monolithic architecture?
+--> Even a small change would not require you to test the entire application.
+--> No Complexity in handling the data
+--> if one module goes down the entire application would not crash
+--> very easy to adapt to new technologies.
+				
+	
