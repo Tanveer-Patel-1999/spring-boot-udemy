@@ -1,0 +1,69 @@
+											Actuator
+											=========
+1 : what is used of actuator
+-----------------------------
+problem
+-------
+--> How can i " monitor and manage " my appliction?
+--> How can i check the  " appliction health "?
+--> how can i access " appliction matrics " ?
+
+
+solution
+--------
+--> simply add a depemdency to your POM.xml file
+
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-actuator</artifactId>
+    </dependency>
+	
+--> Rest endpoint are automatically added to your appliction.
+--> Spring boot Actuator automatically exposes endpoint to monitor and manage your appliction.
+--> end point are prefixed with : /actuator
+
+/health
+-------
+--> /health : health information about your appliction
+--> /health end point check the status of your appliction
+--> normally used by monitoring the appliction is up or down
+--> by default only /health endpoint is exposed
+
+/info
+------
+--> The /info endpoint can provide information about your appliction.
+--> /info endpoint does not exposed by default
+--> if you need to exposed /info end point the you have to add the properties in your appliction.properties
+	
+	management.endpoint.web.exposure.include = health,info
+	management.info.even.enabled=true
+	
+	info.app.name=My Super cool app
+	info.app.description = A crazy and fun app
+	info.app.version=1.0.0
+ 
+ /auditevents
+ ------------
+ --> Audit events for your appliction
+ 
+ /bean
+ ----
+ --> list of all beans registered the spring appliction context
+ 
+ /mappings
+ ---------
+ --> list of all @RequestMapping path
+ 
+ 
+ note : By default only /health end is exposed
+ --> to expose all actuator endpoint over HTTp use " wildcard : * " 
+ --> management.endpoint.web.exposure.include=*
+ 
+ 
+ 2 : development process of Actuator in spring-boot-starter-actuator?
+ -------------------------------------------------------------------
+ --> Edit pom.xml and add spring-boot-starter-actuator dependency
+ --> view actuator endpoint for :/health
+ --> edit appliction.properties to enable all the end points : /info
+ --> 
+ 

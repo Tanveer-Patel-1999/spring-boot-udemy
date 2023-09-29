@@ -1,68 +1,12 @@
-										Spring boot basic
-										==================
-1 : define a spring boot?
-2 : differnce between spring-boot and spring?
-3 : what is mean by spring initiliazer?
-
-4 : what is Spring-boot embedded server?
---> spring boot provided tomcat embedded server ?
-
-5 : Running spring-boot apps?
---> java -jar target/jar-file-name 
-
-6 : Spring-boot FAQ : frequnnety asked question
-	A : does spring-boot replace spring MVC ,Spring REST , Spring Core , Spring AOP etc?
-	->: No : instead spring boot actually uses thoses technologies in the background
-	
-	B : does Spring boot code run faster than regular spring code?
-	->: No
-	->: Behind the scenes,Spring boot uses same code of Spring Framework.[spring MVC ,Spring REST , Spring Core]\
-	
-	c : Do i need specail IDE for Spring boot?
-	->: no
-	->: you van used any IDE for Spring-boot even use plain text editor
-	
-	
-7 : spring boot initiliazer Demo?
---> spring-boot initiliazer is used to create a "starter spring project".
---> search : spring.io
--->step  : A
-=========
-1 : project : mavne
-2 : language: java
-3 : spring boot version : 3.1.0
-4 : project Metadate
-	1 : group ID: com.tanveer
-	2 : artifact: quizapp [ name of my application]
-	3 : name : quizapp
-	4 : description : Tanveer Quize Application
-	5 : package name : com.tanveer.quizapp
-	6 : packaging : jar
-	7 : java version : 17
-
-step : B
-========
-dependency :
-------------
-
-1 : Spring Web
-4 : lombok
-5 : swagger
-<dependency>
-		<groupId>org.springdoc</groupId>
-		<artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
-		<version>2.0.0</version>
-</dependency>
-
 									Maven
 									=====
 
-8 : whta is Maven?
+1 : whta is Maven?
 --> Maven is project Management tool
 --> Maven is used for build management and dependencies.
 
 
-8 : what problems Does maven solve?
+2 : what problems Does maven solve?
 problem :
 --------
 --> when building your java project, you may need additional JAR files
@@ -78,7 +22,7 @@ Maven solution
 --> And Maven will make those JAR files available during a compile / run time
 --> Think of MAven as your friendly helper.
 
-9 : how maven work?
+3 : how maven work?
 ------------------
 steps:
 1 : give to config file to maven : [ give the shopping list to maven]
@@ -88,20 +32,20 @@ steps:
 5 : Maven save the files in the local repository.
 6 : Maven is build and run.
 
-10 : Handling JAR Dependncies?
+4 : Handling JAR Dependncies?
 -----------------------------
 --> when Maven retrieves a project dependency
 --> It will also download supporting dependencies
 --> Maven will handle this for us automagically.
  
-11 : building and Running?
+5 : building and Running?
 --------------------------
 --> When you build and run you appllication
 --> Maven will handle class or build path for you
 --> based on config file , Maven will Add JAR files accordingly
 
 
-12 : Maven project structure?
+6 : Maven project structure?
 -----------------------------
 --> maven provided a standard Directory Structure
 1 : pom.xml 		   : maven configuration file 
@@ -111,13 +55,13 @@ steps:
 5 : src/test 		   : unit testing code
 6 : target             : Destination directory for compiled code. automatically created by maven 
 
-13 : what is benefits of Standard Directory structure?
+7 : what is benefits of Standard Directory structure?
 ------------------------------------------------------
 --> For new developer joining a project
 --> they can easily find code, properties files, unit test , web files etc
 
 
-14 : advantages of Maven
+8 : advantages of Maven
 ------------------------
 1 : Dependency management
 	--> Maven will find JAR files for you
@@ -129,7 +73,7 @@ steps:
 									Pom.xml
 									=======
 
-15 : maven key concepts
+9 : maven key concepts
 -----------------------
 A : POM file
 -----------
@@ -154,7 +98,7 @@ dependencies
 --> List of dependencies we required for project
 --> web , lombok , swagger , jpa etc
 
-16 : project Coordinates
+10 : project Coordinates
 ------------------------
 --> Project Coordinates is used to uniquely identify a project.
 --> for example  : gps Coordinates for your house : [ latitude / longitude ]
@@ -166,7 +110,7 @@ dependencies
 	<version>0.0.1-SNAPSHOT</version>  --------------------> house number
 	
 	
-17 : project Coordinates  elements
+11 : project Coordinates  elements
 --------------------------------- 
 --> they are three elements
 --> 
@@ -176,18 +120,18 @@ dependencies
 			   : if project is under active development then used SNAPSHOT : 0.0.1-SNAPSHOT
 
 
-18 : dependency Coordinates
+12 : dependency Coordinates
 ---------------------------
 --> to add give dependency to your project , we nedd
 --> groupId , artifactId , version
 --> we can also refered as " GAV ".
 
-19 : how to find dependency Coordinates
+13 : how to find dependency Coordinates
 ---------------------------------------
 --> vist  hhtp://search.maven.org on the chrome
 
 
-20 : what is used of spring-boot-starter-web dependency?
+14 : what is used of spring-boot-starter-web dependency?
 --> Spring-boot-starter is collection of maven dependencies and compatible version.
 1 : spring-web
 2 : spring-webmvc-ui
@@ -195,16 +139,41 @@ dependencies
 4 : tomcat
 5 : spring-boot-starter
 
-21 : what is used of spring-boot-maven-plugin ? 
+15 : what is used of spring-boot-maven-plugin ? 
 --> this plugin is used to package excutable jar file or war 
 --> using this pligin easily run the app.
 --> mvn spring-boot:run
 
+16 : Spring-boot-starter ?
+--> there are 30 plus sprin-boot-starter
+	1 : Spring- -starter-web 			: Building web app, includes validation , REST , Uses Tomcat at default embedded server.
+	2 : Spring-boot-starter-security 	: Adding Spring security supporting
+	3 : Spring-boot-starter-data-jpa	: spring database support with JPA and Hibernate
+						
+17 : what is in the starter?
+--> FAQ :  what is Spring-boot-starter-xyz?
+--> in intellige : maven --> project --> dependencies --> all starter dependencies present here
 
-								Resouces package
-								=================
+18 : what is used of Spring-boot-starter-parent?
+--> Spring-boot provides " Starter Parent"
+--> This is a special starter that provides Maven default.
 
-22 : what is used of Application.properties
+--> For sprin-boot-starter-* dependencies no need to list version.
+--> all starter dependencies inherit version from starter-parent.
+--> Spring-boot-starter-parent also provide  "spring-boot-maven-plugin".
+
+19 : what is the benefits of Spring-boot-starter-parent?
+--> it provides Default maven configuration : java version , UTF- encoding 
+--> Dependency management
+	--> user version on parent only
+	--> Spring-boot-starter-* dependencies inherit version from parent.
+--> Default configuration of sprin-boot-maven-plugin
+	
+
+						Resouces package
+						=================
+
+20 : what is used of Application.properties
 -------------------------------------------
 --> by default , spring-boot will load properties from : application.properties
 --> application properties is created by spring initiliazer.
@@ -213,42 +182,42 @@ dependencies
 example : server.port=1111
 		  team.name = ppay-team
 
-23 : how to read data from application properties?
+21 : how to read data from application properties?
 --------------------------------------------------
 --> Read data from : application.properties
 --> using @Value("${ team.name}")
 	private String  teamName
 
 
-24 : what is used of static package ?
+22 : what is used of static package ?
 -----------------------------------
 --> by default spring-boot will load static resources from "/static" directory.
 --> example od static resources HTML file, CSS , JavaScript , images etc.
 
-25 : what is used of template package ?
+23 : what is used of template package ?
 -----------------------------------
 --> by default sprin-boot will load template resources from "/template" directory.
 
 
-
-21 : Developmen process of spring boot project ?
-1 : Create a project using spring boot initiliazer. : [ start.spring.io]
-2 : download the zip file
-3 : Unzip the file
-4 :  import the project into our IDE
-
-
-
-22 : create a rest controller?
---> create a package : rest
---> inside a package create a " controllerClass"
---> annotated a class as
-1 : @RestController
---> expose the end point
+							DEV TOOLS
+							=========
+1 : what is used of sprin-boot dev tools ?
+problem
+--------
+--> when running Spring-boot Application
+--> If you make changes to your source code 
+--> then you have manually restart your application.
 
 
-23 : Goals of Spring
-1 : Lighweight development with Java Pojos : plane-old-java-objects
-2 : Dependency injection to promote loose coupling.
-3 : minimize boilerplate java code
+solution
+--------
+--> use of sprin-boot-devtools
+--> "automatically restart your application when code is updated" .
+--> Simply add the the dependency to your Pom file
 
+note : Intellij Community edition does not support DevTools by default
+--> u have to additional configuration 
+	setting --> Build , Exceution , Deployment --> Compiler
+--> check the box : Build project automatically
+	setting --> advanced setting
+--> check the box : allow auto-make-to start................

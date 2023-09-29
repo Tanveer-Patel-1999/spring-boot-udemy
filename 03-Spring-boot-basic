@@ -1,0 +1,78 @@
+										Spring boot basic
+										==================
+1 : define a spring boot?
+2 : differnce between spring-boot and spring?
+3 : what is mean by spring initiliazer?
+
+4 : what is Spring-boot embedded server?
+--> spring boot provided tomcat embedded server ?
+
+5 : Running spring-boot apps?
+--> java -jar target/jar-file-name 
+
+6 : Spring-boot FAQ : frequnnety asked question
+	A : does spring-boot replace spring MVC ,Spring REST , Spring Core , Spring AOP etc?
+	->: No : instead spring boot actually uses thoses technologies in the background
+	
+	B : does Spring boot code run faster than regular spring code?
+	->: No
+	->: Behind the scenes,Spring boot uses same code of Spring Framework.[spring MVC ,Spring REST , Spring Core]\
+	
+	c : Do i need specail IDE for Spring boot?
+	->: no
+	->: you van used any IDE for Spring-boot even use plain text editor
+	
+	
+7 : spring boot initiliazer Demo?
+--> spring-boot initiliazer is used to create a "starter spring project".
+--> search : spring.io
+-->step  : A
+=========
+1 : project : mavne
+2 : language: java
+3 : spring boot version : 3.1.0
+4 : project Metadate
+	1 : group ID: com.tanveer
+	2 : artifact: quizapp [ name of my application]
+	3 : name : quizapp
+	4 : description : Tanveer Quize Application
+	5 : package name : com.tanveer.quizapp
+	6 : packaging : jar
+	7 : java version : 17
+
+step : B
+========
+dependency :
+------------
+
+1 : Spring Web
+4 : lombok
+5 : swagger
+<dependency>
+		<groupId>org.springdoc</groupId>
+		<artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
+		<version>2.0.0</version>
+</dependency>
+
+
+8 : Developmen process of spring boot project ?
+1 : Create a project using spring boot initiliazer. : [ start.spring.io]
+2 : download the zip file
+3 : Unzip the file
+4 :  import the project into our IDE
+
+
+
+9 : create a rest controller?
+--> create a package : rest
+--> inside a package create a " controllerClass"
+--> annotated a class as
+1 : @RestController
+--> expose the end point
+
+
+10 : Goals of Spring
+1 : Lighweight development with Java Pojos : plane-old-java-objects
+2 : Dependency injection to promote loose coupling.
+3 : minimize boilerplate java code
+
