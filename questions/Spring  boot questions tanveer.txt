@@ -1,0 +1,81 @@
+																Spring  boot questions
+																======================
+																
+----------------------------------------------------------------------------------------------------																
+01 : what is mean by spring boot?
+02 : Why did you use sprinig boot in your project?
+03 : Spring boot features?
+04 : spring boot goal.
+05 : list the spring boot components?
+06 : different way to craete a spring boot project?
+07 : uses of spring-boot?
+08 : what is mean by bootstraping?
+09 : explain spring boot application execution?
+10 : what is mean by spring initiliazer?
+11 : spring boot initiliazer Demo or step to create spring boot project using Intilizer?
+12 : Developmen process of spring boot project ?
+13 : how many elements present in the project meta data? 7
+14 : which dependency required to create simple spring project. 
+15 : Spring-boot used which embedded server?
+16 : spring-boot apps bydefault run on which port number?
+17 : does spring-boot replace spring MVC ,Spring REST , Spring Core , Spring AOP etc?
+18 : does Spring boot code run faster than regular spring code?
+19 : Do i need specail IDE for Spring boot?
+20 : how to run spring-boot application?
+21 : without a devtools which problem we faced?
+22 : what is used to devtools?
+23 : what are possible source of external configuration?
+24 : how to read data from application properties?
+25 : where appliction.properties file located ?
+26: differnce between spring-boot and spring?
+
+----------------------------------------------------------------------------------------------------
+															Actuator
+															========
+27 : what is mean by actuator?
+28 : which purpose we can do using Actuator?
+29 : development process of Actuator in spring-boot-starter-actuator?
+30 : what prefix can used actuator? /actuator
+31 : how many endpoint bydefault expose by actuator ? /actuator/health
+32 : which endpoint is expose by actuator? /health
+33 : how to include all endpoint oo actuator?
+34 : how to exclude all endpoint oo actuator?
+
+management.endpoints.web.exposure.include = *
+management.endpoints.web.exposure.exclude= health ,info
+
+
+35 : what are most used spring-boot actuator endpoint?
+--> /actuator/health
+--> /actuator/info
+--> /actuator/bean
+--> /actuator/metrices
+--> /actuator/mapping
+--> /actuator/env
+
+-----------------------------------------------------------------------------------------------------
+
+36 : what is mean by controller?
+37 : what is mean by service?
+38 : what is mean by POJO?
+39 : what is mean by DAO?
+40 : what is dependency management in spring boot?
+41 : what is mean of an IOC?
+42 : spring container work as what : ObjectFactory
+43 : what is mean by dependency Injection?
+44 : goals of Spring container? 2
+45 : dependency Injection type in spring  boot? 3
+46 : what is used of  @Autowired Annotation?
+47 : where we can used @Autowired Annotation?
+48 : when @Autowired annoation is optional?
+49 : what is used of @Component annotation?
+50 : what is used of @SpringBootApplication?
+51 : what is used of @SpringBootConfiguration 
+52 : what is used of @EnableAutoConfiguration
+53 : what is used of @ComponentScan
+54 : what is used of @Configuration
+56 : which dependency injection is recomanded?
+57 : which dependency injection is not recomanded?
+58 : when we used construction injection?
+59 : when we used setter injection?
+

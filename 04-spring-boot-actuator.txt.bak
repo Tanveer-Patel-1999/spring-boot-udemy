@@ -35,8 +35,8 @@ solution
 --> /info endpoint does not exposed by default
 --> if you need to exposed /info end point the you have to add the properties in your appliction.properties
 	
-	management.endpoint.web.exposure.include = health,info
-	management.info.even.enabled=true
+    management.endpoints.web.exposure.include = health,info
+	management.info.env.enabled=true
 	
 	info.app.name=My Super cool app
 	info.app.description = A crazy and fun app

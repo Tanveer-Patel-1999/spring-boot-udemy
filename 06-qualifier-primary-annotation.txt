@@ -1,0 +1,381 @@
+									qualifier-primary-annotation
+									============================
+									
+									
+									@Qualifier
+									==========
+note : by using the "Interface instead of class " we can achived a loose coupling
+									
+1 : what is used of  @Qualifiers annotation?
+----------------------------------------
+--> @Qualifier annotaion is used in conjunction with Autowired to avoid confusion when we have two or more beans configiured for same type.
+--> Mutiple Coach implemention : caoch is interface
+--> Coach
+	1 : CricketCoach
+	2 : BaseBallCoach
+	3 : TrackCoach
+	4 : TennisCoach
+	
+we get error:
+-------------
+--> Parameter 0 of constructor com.tanveer.spring.demo.rest.controller required a single bean ,but 4 were found.
+ 
+--> we can resolve that issue using @Qualifier annotation
+--> @Qualifier("cricketCoach") : @Qualifier("beanID")
+--> cricketCoach is a bean id.
+--> beanId is a same name as a class name , first character of class name is lower case
+
+exmaple :
+---------
+    private  Coach coach;
+
+    @Autowired
+    public WorkOutController(@Qualifier("trackCoach") Coach coach) {
+        this.coach = coach;
+    }
+	
+	
+									@Primary
+									========
+									
+2 : what is used of @Primary annotaion?
+--------------------------------------
+
+--> we use @primary annotaion to give "higher preference to bean when there are multiple beans of the same type.
+--> @Primary annotaion is alternate of @Qualifier annotaion	
+--> @Primary annotaion used on class level.
+
+note : @Primary : only one
+--------------------------
+--> when using @primary , can have "only one " for mutiple implemention
+--> if you mark mutiple classes with @Primary we have a problem.
+
+we get an error:
+----------------
+--> more then one primary bean found among candidates.
+
+exmaple : 
+@Component
+@Primary
+public class BaseBallCoach implements Coach{
+    @Override
+    public String getDailyWorkOut() {
+        return "daily do baseBall practice for 4 hours";
+    }
+}
+
+
+3 : Mixing @Primary and @Qualifier?
+----------------------------------
+--> If you mix @Primary and @Qualifier
+--> @Qualifier has higher prority then @Primary
+
+
+4 : which annotaion is higher priority?
+--> @Qualifier annotaion is the higher priority then @Primary annotaion?
+
+5 : which one should i used @Primary or @Qualifier?
+--------------------------------------------------
+--> recomanded to used @Qualifier because of
+--> more specific
+--> higher priority
+
+												lazy initilization : @Lazy
+												=========================
+6 : what is mean by lazy initilization?
+--------------------------------------
+--> Bean is only initilized it needed for dependency injection.
+
+
+--> by default , when your application starts all beans are initilized.
+--> spring will create an instance of each and make them available.
+
+lazy initilization of bean
+-------------------------
+--> instead of creating all beans we can specify lazy initilization.
+--> A bean will only be initilized  in the following case : on demand it is available
+	1 : if it is needed for dependency injection.
+	2 : or its explicity request
+--> Add @Lazy annotaion to the given class.
+
+
+7 : lazy initilization - Gloabl confusion?
+-----------------------------------------
+--> edit your application.properties file
+
+spring.main.lazy-initialization=true
+
+--> using of this properties : all beans are lazy , no bean are created untill needed including our controller.
+
+Q : which initialiion is recommanded Eager or Lazy?
+--> eagerly initilization is recommanded : to avoid and detect all possible error immediately rather than at runtime.
+
+8: advantages of Lazy initilization?
+------------------------------------
+1 : only create object as needed.
+2 : may help with faster startup time if you have large numbers of  components.
+
+
+										Bean scope
+										==========
+										
+11 : what is a bean scope?
+-------------------------
+--> scope refer to the lifecycle of a bean
+	1 : How long does bean alive?
+	2 : How many instance are  created?
+	3 : how is bean shared?
+	
+										
+9 : how we explicity specify Bean scope? or what is used of @Scope annotaion
+-----------------------------------------------------------------------------
+--> using @Scope annotaion we can define a scope of bean.
+--> we use @Scope to define the scope of bean a @Component class or a @Bean definition.
+
+exmaple :
+
+@Component
+@Scope(value = ConfigurableBeanFactory.SCOPE_SINGLETON)
+public class SingletoneBean {
+    public SingletoneBean()
+    {
+        System.out.println("SingletoneBean .... ");
+    }
+}
+
+
+10 :  how many types of Spring Bean scope?
+-----------------------------------------
+1 : singleton : create a single instance of bean share accross the entire application. default scope.
+2 : prototype : create a new instance for each container request.
+3 : request   : scoped to an Http web request . only used for web apps
+4 : session   : scoped to an Http web request . only used for web apps	
+5 : golbal-session : scope to a global Http web session . only used for web apps.
+
+		
+11 : what is default scope of bean ?
+-----------------------------------
+--> default scope of bean is " Singleton".
+
+
+12 : what is a singleton scope?
+------------------------------
+--> Spring container create only one instance of bean and shared across the entire application.
+--> singleton scope is the Default scope of a bean.
+--> singleton scope is catched in memory.
+--> singleton scope is return the same bean you can request mutiple time also.
+
+exmaple :
+
+@Component
+@Scope(value = ConfigurableBeanFactory.SCOPE_SINGLETON)
+public class CricketCoach implements Coach {
+    public SingletoneBean()
+    {
+        System.out.println("SingletoneBean .... ");
+    }
+}
+
+13 : what is prototype scope?
+----------------------------
+--> Spring container create new instance of bean for each conatiner request.
+--> new objcet instance create for each injection
+
+
+exmaple :
+
+@Component
+@Scope(value = ConfigurableBeanFactory.SCOPE_PROTYPE)
+public class CricketCoach implements Coach {
+    public SingletoneBean()
+    {
+        System.out.println("Prototype bean .... ");
+    }
+}
+
+-------- exmaple -------------
+
+@RestController
+@RequestMapping("BeanScopeController")
+public class BeanScopeController {
+
+    private final Coach coach1;
+
+    private final Coach coach2;
+
+    /*      check to see if this is the same bean
+            True or false depending on the bean scope
+
+            singleton : true
+            prototype : false
+    */
+    public BeanScopeController( @Qualifier("cricketCoach") Coach coach1, @Qualifier("cricketCoach") Coach coach2) {
+        this.coach1 = coach1;
+        this.coach2 = coach2;
+    }
+
+
+    @GetMapping("check")
+    public String checkScope(){
+        return "comparing beans : coach1 == coach2 : "+ (coach1 == coach2);
+    }
+}
+
+
+13 : bean lifecycle methode - Annotations?
+------------------------------------------
+Bean lifecycle
+-------------
+1 : conatiner started
+2 : bean instantiated
+3 : Dependencies are injected
+4 : Internal spring Processing
+5 : execute your own custom init methode
+6 : Bean is ready to used
+7 : conatiner is shutdown
+8 : your coustom method is Destroy
+9 : stop 
+
+
+14 : bean LifeCycle Methods / Hooks?
+-----------------------------------
+--> you can add custom code during " bean initialization "
+	1 : Calling custom business logic method
+	2 : Setting up handle to resources : [ db , socket , file etc ]
+	
+--> you can add custom code during " bean destruction ".
+	1 : Calling custom business logic method
+	2 : clean up handle to resources : [ db , socket , file etc ]
+	
+	
+15 : init() and destroy() methode configuration?
+------------------------------------------------
+--> for init() method configuration you have to annotated method as " @PostConstruct".
+--> for destroy() method configuration you have to annotated method as " @PreDestroy ".
+
+
+16 : development process of bean lifecycle method?
+--------------------------------------------------
+1 : Define your methods for init() and destroy().
+2 : Add annotaions : @PostConstruct and @PreDestroy.
+
+17 : when init() and destroy() method will execute?
+--------------------------------------------------
+--> when we start our application init() method first execute
+--> when we stop our application destroy method will execute
+
+    @PostConstruct
+    public void doMyInit(){
+        System.out.println("In doMyInit() :"+getClass().getSimpleName());
+    }
+	
+	@PreDestroy
+    public void doMyDestroy(){
+        System.out.println("In doMyDestroy() :"+getClass().getSimpleName());
+    }
+
+
+18 :what is relationship between Prototype Beans and Lazy Initialization ?
+------------------------------------------------------------------------
+--> Prototype beans are lazy by default. T
+--> here is no need to use the @Lazy annotation for prototype scopes beans.
+
+19 : Prototype Beans and Destroy Lifecycle method relationship?
+--------------------------------------------------------------
+--> For "prototype" scoped beans, Spring does not call the destroy method.
+
+
+
+									Configuring Bean with java code : @Bean
+									=======================================
+
+
+20 : development process of configiured bean with java code?
+-----------------------------------------------------------
+--> create a configuartion class and annotated as @Configuration
+
+--> Define a @Bean method in a @configuration class
+
+	@Bean
+	public Coach swimCoach(){
+		return new SwimCoach();
+	}
+	
+--> swimCoach is a beanID for SwimCoach class.
+--> Inject the bean into our controller 
+
+											@Bean
+											=====
+											
+20 : what is mean by bean in spring boot?
+----------------------------------------
+--> spring bean are the object which are created and managed by spring conatiner
+--> spring bean heart of the application
+--> Bean can be define using Xml configuartion or using annotaion
+--> ix xml configuartion bean can be define using <bean> tag
+--> using @Bean using annotaion
+--> @Bean annotaion used at the method level.
+--> we can used @Bean annotaion in the @Configuration class.
+
+											
+21 : use case for @Bean annotaion?
+----------------------------------
+--> Make an existing third-party class available to spring framework.
+--> You may not have to access to the source code of third-party class.
+--> you would like to use the third-party class as a spring bean.
+
+Real-world project example
+--------------------------
+--> our project used Amazon web service (AWS) to store a documents.
+	1 : Amazon Simple Storage Service : S3
+	2 : S3 is cloud based storage system.
+	3 : s3 is used to store documents, files , images etc.
+--> we want to used the AWS S3 client as spring bean in our application
+--> The AWS s3 client code is the part of Aws SDK.
+--> we can not modify the AWS SDK source code
+--> we can not just add @Coomponent annotaion
+
+
+22 : development process?
+-------------------------
+1 : create a package : config
+2 : in a config package create a configuartion class : SportConfig
+3 : annotated a SportConfig class as a @Configuration
+4 : define a @Bean method to configure the bean 
+    @Bean
+	public RestTemplate restTemplate(){
+		return new RestTemplate();
+	}
+	
+	
+												 @SpringBootApplication Annotation
+												 =================================
+
+24 : @SpringBootApplication Annotation
+-------------------------------------
+--> @SpringBootApplication annotaion is the combination of three annotaion
+	1 : @SpringBootConfiguration --> it is internally used @Configuration annotaion
+	2 : @EnableAutoConfiguration
+	3 : @ComponentScan
+--> It is the entry point of the spring boot application.
+
+
+25:  @SpringBootConfiguration 
+------------------------------
+--> it is internally used @Configuration annotaion
+--> It is work as @Configuration annotaion
+--> we can used @Configuration annotaion for "JAVA based configuration".
+
+
+26 : @Configuration
+-------------------
+--> we can used @Configuration annotaion for "JAVA based configuration".
+
+
+27: @EnableAutoConfiguration annotaion
+-------------------------------------
+--> this annotaion is responsible for enbale the autoConfiguration class whene were our springBootApplication find the dependency on class path.
+
+27 : @ComponentScan annotaion
+-----------------------------
+--> using this annotaion we can scan all the spring component present in the base package and its subPackage.

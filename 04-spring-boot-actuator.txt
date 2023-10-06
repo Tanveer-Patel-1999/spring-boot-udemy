@@ -64,6 +64,78 @@ solution
  -------------------------------------------------------------------
  --> Edit pom.xml and add spring-boot-starter-actuator dependency
  --> view actuator endpoint for :/health
- --> edit appliction.properties to enable all the end points : /info
- --> 
+ --> edit appliction.properties to enable all the end points : /actuator/info
  
+			management.endpoint.web.exposure.include=*
+ 
+ 
+ 3 : what spring boot actuator security
+ -----------------------------------------
+ --> you many not want to expose all of this information.
+ --> add spring security dependency to project and secured the endpoint.
+ 
+   <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-security</artifactId>
+    </dependency>
+
+--> default user : user
+--> password : check console log for password
+
+--> you can override default user name and password
+--> edit appliction.properties
+
+spring.security.user.name = Tanveer
+spring.security.user.password = 1999
+
+
+4 : how to excluding endpoints from the actuator?
+------------------------------------------------
+--> to excluding / health and /info end point
+--> edit the pom.xml 
+--> management.endpoint.web.exposure.exclude= health , info
+
+5 : development process of Actuator in spring boot actuator security?
+---------------------------------------------------------------------
+--> edit a pom.xml and add spring-boot-starter-security dependency
+--> Disable endpoints for /health and /info
+--> eidt the appliction.properties : management.endpoint.web.exposure.exclude= health , info
+
+
+
+			Running from command Line
+			=========================
+--> two options to run a spring boot appliction from command line
+1 : use jar file 
+	-----> java -jar jare_path_name
+	
+2 : use spring boot maven plugin
+	-----> mvn spring-boot:run
+	-----> mvn spring-boot:run
+	
+	
+6 : how to read the value from custom appliction.properties file?
+----------------------------------------------------------------
+--> spring boot read information from  standard properties file : appliction.properties file
+--> appliction.properties file located  : src/main/resources/appliction.properties
+--> spring boot read the data from appliction.properties using " @Value("${}") " annoation.
+
+7 : development process to read the data from appliction.properties?
+-------------------------------------------------------------------
+1 : define custom properties in the appliction.properties file
+2 : Inject properties into spring boot appliction using @value annoation.
+
+
+7 : spring boot properties
+--------------------------
+# Http server port
+server.port = 1234
+
+#context path of the appliction
+server.servlet.context-path = / my-app
+
+http://localhost:7070/my-app/
+
+
+
+

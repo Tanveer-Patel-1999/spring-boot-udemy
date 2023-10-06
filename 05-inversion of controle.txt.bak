@@ -1,0 +1,176 @@
+																Inversion of controle :IOC
+																==========================
+1 : what is mean by IOC?
+------------------------
+--> IOC : Inversion of Controle
+--> IOC maintain the life cycle of bean from creation to destruction.
+--> spring container work as objectFactory
+
+
+2 : Spring container?
+--------------------
+--> spring container hava two main goal
+ 1 : create and manage object using  IOC.
+ 2 : Inject object dependency usingb dependency injection.
+
+
+3:  how to configuring spring container?
+----------------------------------------
+--> using XML configuration file. : old
+--> using JAVA annotation.		  : modern
+--> using java source code`		  : modern
+
+4 : what is mean by dependency injection ?
+-----------------------------------------
+exm: 
+
+me --> give me car object --------> car factory
+		car				  <----------
+		
+		
+		
+5 : Injection type in spring  boot?
+-----------------------------------
+--> there are mutiple types of injection with spring 
+	1 : construction injection
+	2 : setter injection
+	3 : feild injcetion : not recommanded
+	
+6 : when we used construction and setter injection?
+---------------------------------------------------
+construction injection
+----------------------
+1 : when u have required dependency then go for construction injection.
+
+setter injection
+---------------
+1 : when you have optional dependency :( if dependency is not provided)
+
+
+7 : what is Spring AutoWiring?
+-----------------------------
+--> for dependency injection we can used " AutoWiring".
+--> @Autowired annotation tell spring to inject a dependency.
+
+
+8 : development process of construction injection?
+--------------------------------------------------
+1 : define the dependency interface and class.
+2 : create a demo Rest controller
+3 : create a constructor in your class for injection.
+4 : add @GetMapping for /dailyWorkOut end point.
+
+9 : what is used of @Component annotation?
+-----------------------------------------
+--> @Component annotation marks a class as a "Spring bean".
+--> @Component annotation also make the bean available for " dependency injection"
+--> A spring bean in just a regular java class that manage by "spring".
+
+10 : what is used of @Autowired annotation?
+-------------------------------------------
+--> @Autowired annotation tell spring to inject a dependency.
+--> If you only have one constructor then @Autowired is optional.
+
+11 : construction injection behind the scenes?
+----------------------------------------------
+--> how spring process your application
+
+--> behind the scenes spring Framewoerk
+	1 : craete a new instance of the dependency
+		Demo demo = new Demo();
+		
+	2 : Perform a construction injcetion
+		DemoController demoConteroller = new DemoController(demo);
+		
+12 : Component Scanning?
+------------------------
+--> @ComponentScan scan the main package and sub package
+--> it is used to enable component scanning of current package also recursively scans sub-packages.
+
+--> By default , Spring boot starts component scanning
+	1 : from same package as your main Spring Boot application.
+	2 : also scans sub-packages recursively.
+	
+	
+@SpringBootApplication(
+		scanbasePackage= {
+						"com.abc.demo",
+						"com.xyz.first"
+						})
+	
+
+13 : what is used of @SpringBootApplication?
+--------------------------------------------
+--> it is combination / composed  of three annotation
+1 : @EnableAutoConfiguration
+2 : @ComponentScan
+3 : @Configuration
+
+
+14 : what is used of @EnableAutoConfiguration?
+---------------------------------------------
+--> it is used to Enable Spring boot Auto-configuration support.
+
+15 : what is used of @ComponentScan?
+------------------------------------
+--> @ComponentScan scan the main package and sub package
+--> it is used to enable component scanning of current package also recursively scans sub-packages.
+
+16 : what is used of @Configuration?
+------------------------------------
+--> Able to register extra bean with "@Bean annotation" or import other configuration classes.
+
+
+17 : if the package is not present out the main package how we handl?
+---------------------------------------------------------------------
+-->  create a new package : on java folder
+--> u have to explicitly tell to the spring boot application using  scanBasePackage = {""}
+
+@SpringBootApplication(
+		scanBasePackage= {
+						"com.tanveer.mycoolapp",
+						"com.tanveer.util"
+						})
+						
+						
+18 : setter injection?
+---------------------
+--> using setter injcetion inject dependency by calling setter methode on your class.
+
+
+19 : development process of setter injcetion?
+---------------------------------------------
+--> create setter methode in your class for injcetion.
+--> configure the dependency injection with @Autowired annotation.
+
+20:setter injection behind the scenes?
+-------------------------------------
+
+--> behind the scenes spring Framewoerk
+
+	1 : craete a new instance of the dependency
+		Demo demo = new Demo();
+		
+	2 : Perform a setter injcetion
+		DemoController demoConteroller = new DemoController();
+		demoConteroller.setDemo(demo);
+		
+	private  Coach coach;
+
+		
+    @Autowired
+    public void setCoach(Coach mycoach){
+        coach=mycoach;
+    }
+
+
+21 : feild injection with Annoations and AutoWiring
+----------------------------------------------------
+--> feild injection is not recommanded by spring.io development team
+
+	 @Autowired
+exm: present Coach coach;
+
+because
+-------
+--> make the code harder to unit test.
