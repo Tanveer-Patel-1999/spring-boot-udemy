@@ -1,2 +1,9 @@
 Annoation in spring boot
-----------------------
+------------------------
+1 : @SpringBootApplication
+2 : @SpringBootConfiguration 
+3 : @EnableAutoConfiguration
+4 : @ComponentScan
+5 : @Configuration
+1 : @Autowired
+2 : @Component

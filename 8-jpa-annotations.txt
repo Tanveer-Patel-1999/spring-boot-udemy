@@ -1,0 +1,9 @@
+										jpa annotations
+										===============
+
+1 : @Entity
+2 : @Column(name = "table_name")
+3 : @Id
+4 : @Column(name = "column_name)
+5 : @GeneratedValue(Strategy=GenerationType.IDENTITY)
+

@@ -11,6 +11,7 @@
 07 : uses of spring-boot?
 08 : what is mean by bootstraping?
 09 : explain spring boot application execution?
+09 : How Spring boot run() method work internally?
 10 : what is mean by spring initiliazer?
 11 : spring boot initiliazer Demo or step to create spring boot project using Intilizer?
 12 : Developmen process of spring boot project ?
@@ -28,6 +29,16 @@
 24 : how to read data from application properties?
 25 : where appliction.properties file located ?
 26: differnce between spring-boot and spring?
+27 : why we choose spring boot over spring Framework?
+28 : what is used of @SpringBootApplication?
+29 : what all spring boot starter you have used or what all module you hava work on?
+30 : can i directly used above 3 annoation in my main class , instead of using @SpringBootApplication annoation if yes will my application work as expected?
+31 : what is autocofiguration in sprin-boot?
+32 : how many way to disable a specific auto-configuration class in sprin-boot?
+33 : explain all ways to disable a specific auto-configuration class in sprin-boot?
+34 : what is command line runner in sprin-boot?
+
+
 
 ----------------------------------------------------------------------------------------------------
 															Actuator

@@ -1,0 +1,12 @@
+										jpa annotations
+										===============
+1 : map a class to database table ?
+----------------------------------
+--> @Entity
+--> @Table(name = "Student")
+
+2 : map fields to database columns?
+----------------------------------
+--> @Id
+--> @Column(name ="first-name")
+

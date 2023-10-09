@@ -1,0 +1,6 @@
+										jpa annotations
+										===============
+1 : map a class to database table ?
+--> @Entity
+--> @Table(name = "Student")
+

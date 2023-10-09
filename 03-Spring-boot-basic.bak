@@ -15,45 +15,47 @@ why:
 --> Spring-boot create stand-alone application that can start using java -jar 
 --> there is no requirement of xml configuration.
 
+
+3 : why we choose spring boot over spring Framework?
+---------------------------------------------------
+1 : Dependency Resolution / Avoid version conflict
+2 : Avoid additional configuration
+3 : Embeded tomcat server
+4 : Provide production ready features such as  matrics , healths checks.
+
+
 2 : Spring-boot features?
 -------------------------
 1 : spring-boot-starter
 2 : spring-boot autocifiguration
 3 : spring-boot actuator
-4 : Predeined template : JDBC Template , hibernate Template
-5 : Loose coupling  : it is achive using layers mechanisum : serivces layer, presentation layer , dB layer
-6 : light weight
-7 : Easy to test
-8 : fast developement (RAD : rapid application developement)
-9 : Spring initiliazer
-10: spring CLI
+4 : Spring initiliazer
+5 : spring CLI
+6 : Predefined template : JDBC Template , hibernate Template
+7 : Loose coupling  : it is achive using layers mechanisum : serivces layer, presentation layer , dB layer
+8 : light weight
+9 : Easy to test
+10: fast developement (RAD : rapid application developement)
 
-3 : different way to craete a spring boot project?
+3 : spring-boot component?
+--------------------------
+1 : spring-boot-starter
+2 : spring-boot autocifiguration
+3 : spring-boot actuator
+4 : spring-boot CLI
+
+
+4 : Goals of Spring
+-------------------
+1 : Lighweight development with Java Pojos : plane-old-java-objects
+2 : Dependency injection to promote loose coupling.
+3 : minimize boilerplate java code
+
+5 : different way to craete a spring boot project?
 --------------------------------------------------
 1 : using spring initiliazer : Spring.io
-2 : using spring stater project  in STS.
+2 : using spring stater project  in STS. [ spring tool suite]
 3: using Spring-boot CLI
-
-4 : spring boot application execution?
--------------------------------------
-1 : spring boot application execution start from "main()" method.
-2 : the main() methode internally call " springApplication.run() " methode.
-3 : run() methode perfrom " bootstraping "for our spring-boot application.
-4 : run() start call "stop watch" to identify time taken to bootstrap the spring boot application.
-5 : run() prepare environment to run our spring boot application .[ dev, QA, production]
-6 : run() print a banner [ Spring boot logo print on consol]
-7 : run() start IOC conatiner based on class path.
-8 : run() refresh the context.
-9 : run() method trig the Trigger Runner (ApplicationRunner or CommandLineRunner)
-10: run() method return IOC conatiner, Application context reference.
-
-
-5 : what is mean by bootstraping?
--------------------------------
-1 : Run() method load all the autocifiguration .
-2 : It is resposible to executed all the autocifiguration class.
-3 : run() create an IOC conatiner.
-4 : load the component.
 
 6 : uses of spring-boot?
 ------------------------
@@ -63,46 +65,38 @@ why:
 4 : loggin
 5 : admin features
 
+7 : what is mean by bootstraping?
+-------------------------------
+1 : Run() method load all the autocofiguration .
+2 : It is resposible to executed all the autocofiguration class.
+3 : run() create an IOC conatiner.
+4 : load the component.
 
-5 : differnce between spring-boot and spring?
---------------------------------------------
 
-spring
-------
-1 : Spring is web application framwwork based on java
-2 : spring is more complex then spring-boot
-spring-boot
------------
-1 : Spring-boot is module of spring framwwork
-2 : spring-boot is less complex then spring
+8 : spring boot application execution? 
+--------------------------------------
+1 : spring boot application execution start from "main()" method.
+2 : the main() methode internally call " springApplication.run() " methode.
+3 : run() methode perfrom " bootstraping "for our spring-boot application.
+4 : run() start  "stop watch" to identify time taken to bootstrap the spring boot application.
+5 : run() prepare environment to run our spring boot application .[ dev, QA, production]
+6 : run() print a banner [ Spring boot logo print on consol]
+7 : run() start IOC conatiner based on class path.
+8 : run() refresh the context.
+9 : run() method trig the Trigger Runner (ApplicationRunner or CommandLineRunner)
+10: run() method return IOC conatiner, Application context reference.
 
-6 : what is mean by spring initiliazer?
+
+35 : How Spring boot run() method work internally?
+-------------------------------------------------
+--> Create applicationContext
+--> Register bean into applicationContext
+--> start a embedded tomcat server to run you jar / war.
+
+9 : what is mean by spring initiliazer?
 --------------------------------------
 --> spring initiliazer is used to create a starter spring boot project.
 
-
-7 : Spring-boot used which embedded server?
----------------------------------------
---> spring boot provided tomcat embedded server ?
-
-8 : Running spring-boot apps?
------------------------------
---> java -jar target/jar-file-name 
---> mvn spring-boot: run
-
-9 : Spring-boot FAQ : frequnnety asked question
-------------------------------------------------
-	A : does spring-boot replace spring MVC ,Spring REST , Spring Core , Spring AOP etc?
-	->: No : instead spring boot actually uses thoses technologies in the background
-	
-	B : does Spring boot code run faster than regular spring code?
-	->: No
-	->: Behind the scenes,Spring boot uses same code of Spring Framework.[spring MVC ,Spring REST , Spring Core]\
-	
-	c : Do i need specail IDE for Spring boot?
-	->: no
-	->: you van used any IDE for Spring-boot even use plain text editor
-	
 	
 10 : spring boot initiliazer Demo?
 ---------------------------------
@@ -130,8 +124,8 @@ dependency :
 ------------
 
 1 : Spring Web
-4 : lombok
-5 : swagger
+2 : lombok
+3 : swagger
 <dependency>
 		<groupId>org.springdoc</groupId>
 		<artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
@@ -146,63 +140,101 @@ dependency :
 3 : Unzip the file
 4 :  import the project into our IDE
 
-12 : Goals of Spring
--------------------
-1 : Lighweight development with Java Pojos : plane-old-java-objects
-2 : Dependency injection to promote loose coupling.
-3 : minimize boilerplate java code
 
+12 : Spring-boot used which embedded server?
+---------------------------------------
+--> spring boot provided tomcat embedded server ?
 
-13 : what is mean by controller?
--------------------------------
-1 : it is light weight 
-2 : controller handle request and respose.
-3 : business logic is not present in the controller.
-4 : controller handle exception
-5 : controller class annotated with @Controllert or @RestController annotation.
+12 : spring-boot apps bydefault run on which port number?
+-------------------------------------------------------
+--> 8080
 
-14 : what is mean by service?
------------------------------
-1 : it is heavy weight.
-2 : service process a request.
-3 : business logic are present in the service.
-4: service class annotated with @Service annotation
+13 : Spring-boot FAQ : frequnnety asked question
+------------------------------------------------
+	A : does spring-boot replace spring MVC ,Spring REST , Spring Core , Spring AOP etc?
+	->: No : instead spring boot actually uses thoses technologies in the background
+	
+	B : does Spring boot code run faster than regular spring code?
+	->: No
+	->: Behind the scenes,Spring boot uses same code of Spring Framework.[spring MVC ,Spring REST , Spring Core]
+	
+	c : Do i need specail IDE for Spring boot?
+	->: no
+	->: you van used any IDE for Spring-boot even use plain text editor
+	
 
-
-15: what is mean by POJO?
--------------------------
-1 : POJO : plane old java objects
-2 : pojo is a simple java class
-3 : json resquest and respose handle by the pojo
-
-16 : what is mean by DAO?
--------------------------
-1 : DAO : data access objects
-2 : it is simple java class which conatin JDB logic
-3 : DAO is important component in business logic.
-
-
-17 : spring-boot component?
---------------------------
-1 : spring-boot-starter
-2 : spring-boot autocifiguration
-3 : spring-boot actuator
-4 : spring-boot CLI
-
-18 : what are possible source of external configuration?
+							Running from command Line
+							=========================
+14 : how to run spring-boot application?
+--------------------------------------
+--> two options to run a spring boot appliction from command line
+1 : use jar file 
+	-----> java -jar jare_path_name
+	
+2 : use spring boot maven plugin
+	-----> mvn spring-boot:run
+	
+	
+	
+	
+							Resources
+							=========
+	
+	
+15 : what are possible source of external configuration?
 --------------------------------------------------------
 1 : Application.properties
 2 : command line properties
 3 : profile specific properties
 
-19 : what is dependency management in spring boot?
--------------------------------------------------
---> dependency management is basically used to manage " dependency and configuration " automatically without specifying the version of that dependency.
 
 
-							DEV TOOLS : restart server again and agin
+16 : how to read data from application properties?
+--------------------------------------------------
+--> define the properties in the application.properties
+--> Read data from : application.properties
+--> appliction.properties file located  : src/main/resources/appliction.properties
+--> spring boot read the data from appliction.properties using @Value("${key}") annoation.
+
+# key = value
+team.name = ppy-team
+mail.host = gmail.com
+mail.email = tas@gmail.com
+mail.password= 1999
+
+--> using @Value("${ team.name}")
+	private String  teamName
+	
+17 : list some spring boot properties
+------------------------------------
+# Http server port
+server.port = 1234
+
+#context path of the appliction
+server.servlet.context-path = / my-app
+
+http://localhost:7070/my-app/
+	
+
+18 : what is used of static package ?
+-----------------------------------
+--> by default spring-boot will load static resources from "/static" directory.
+--> example od static resources HTML file, CSS , JavaScript , images etc.
+
+19 : what is used of template package ?
+-----------------------------------
+--> by default sprin-boot will load template resources from "/template" directory.
+
+20 : what are possible source of external configuration?
+--------------------------------------------------------
+1 : Application.properties
+2 : command line properties
+3 : profile specific properties
+
+	
+								DEV TOOLS : restart server again and agin
 							=========================================
-20 : what is used of sprin-boot dev tools ?
+21 : what is used of sprin-boot dev tools ?
 problem
 --------
 --> when running Spring-boot Application
@@ -225,71 +257,98 @@ note : Intellij Community edition does not support DevTools by default
 
 
 
-						Resouces package
-						=================
+22 : what is mean by controller?
+-------------------------------
+1 : it is light weight 
+2 : controller handle request and respose.
+3 : business logic is not present in the controller.
+4 : controller handle exception
+5 : controller class annotated with @Controllert or @RestController annotation.
 
-21 : what is used of Application.properties
+23 : what is mean by service?
+-----------------------------
+1 : it is heavy weight.
+2 : service process a request.
+3 : business logic are present in the service.
+4: service class annotated with @Service annotation
+
+
+24: what is mean by POJO?
+-------------------------
+1 : POJO : plane old java objects
+2 : pojo is a simple java class
+3 : json resquest and respose handle by the pojo
+
+25 : what is mean by DAO?
+-------------------------
+1 : DAO : data access objects
+2 : it is simple java class which conatin JDB logic
+3 : DAO is important component in business logic.
+
+
+26 : what is dependency management in spring boot?
+-------------------------------------------------
+--> dependency management is basically used to manage " dependency and configuration " automatically without specifying the version of that dependency.
+
+	
+27: differnce between spring-boot and spring?
+--------------------------------------------
+
+spring
+------
+1 : Spring is web application framwwork based on java
+2 : spring is more complex then spring-boot
+spring-boot
+-----------
+1 : Spring-boot is module of spring framwwork
+2 : spring-boot is less csSomplex then spring
+
+
+28 : what all spring boot starter you have used or what all module you hava work on?
+-----------------------------------------------------------------------------------
+1 : spring boot stater web
+2 : spring boot starter data JPA
+3 : sprin-boot-starter AOP
+4 : sprin-boot-starter web services
+5 : sprin-boot-starter security
+6 : sprin-boot-starter for apache Kafka
+7 : sprin-boot-starter for Spring cloud
+
+29 : can i directly used above 3 annoation in my main class , instead of using @SpringBootApplication annoation if yes will my application work as expected?
+-------------------------------------------------------------------------------------------------------------------------------------------------------------
+--> you can  used thses annoation it will work fine?
+
+30 : what is autocofiguration in sprin-boot?
 -------------------------------------------
---> by default , spring-boot will load properties from : application.properties
---> application properties is created by spring initiliazer.
---> application.properties empty at the beginning
---> we can add spring boot properties
-example : server.port=1111
-		  team.name = ppay-team
-
-21 : how to read data from application properties?
---------------------------------------------------
---> Read data from : application.properties
---> appliction.properties file located  : src/main/resources/appliction.properties
---> spring boot read the data from appliction.properties using @Value("${key}") annoation.
-
-# key = value
-team.name = ppy-team
-mail.host = gmail.com
-mail.email = tas@gmail.com
-mail.password= 1999
-
---> using @Value("${ team.name}")
-	private String  teamName
-	
+--> sprin-boot autocofiguration is super features given by spring developer.
+--> which automatically configure your application based on the class path , dependency , properties setting .
 
 
+32 : how many way to disable a specific auto-configuration class in sprin-boot?
+------------------------------------------------------------------------------
+--> they are two way 
+	1 : using main class : --> @SpringBootApplication(exclude = { DataSourceAutoConfiguration.class})
+	2 : using application.properties : --> spring.autoconfigure.exclude= org.sprigframework.boot.autocifigure.aop.AopAutoconfiguration
 
-7 : development process to read the data from appliction.properties?
+33 : explain how can you disable a specific auto-configuration class in sprin-boot?
+--------------------------------------------------------------------------
+--> go to main class
+--> @SpringBootApplication(exclude = { DataSourceAutoConfiguration.class})
+--> DataSourceAutoConfiguration.class is not loaded automatically because we used " exclude " attribute.
+
+--> we can exlude from application.properties?
+----------------------------------------------
+--> edit application.properties
+--> spring.autoconfigure.exclude= org.sprigframework.boot.autocifigure.aop.AopAutoconfiguration
+
+--> value should be full quilified package name : org.sprigframework.boot.autocifigure.aop.AopAutoconfiguration
+--> give the packagename + className as a value
+
+34 : how can you customize the default configuration in sprin-boot?
 -------------------------------------------------------------------
-1 : define custom properties in the appliction.properties file
-2 : Inject properties into spring boot appliction using @value annoation.
+--> server.port = 1234
 
 
-7 : spring boot properties
---------------------------
-# Http server port
-server.port = 1234
-
-#context path of the appliction
-server.servlet.context-path = / my-app
-
-http://localhost:7070/my-app/
-
-
-22 : what is used of static package ?
------------------------------------
---> by default spring-boot will load static resources from "/static" directory.
---> example od static resources HTML file, CSS , JavaScript , images etc.
-
-23 : what is used of template package ?
------------------------------------
---> by default sprin-boot will load template resources from "/template" directory.
-
-
-			Running from command Line
-			=========================
-24 : how to run spring-boot application?
---------------------------------------
---> two options to run a spring boot appliction from command line
-1 : use jar file 
-	-----> java -jar jare_path_name
-	
-2 : use spring boot maven plugin
-	-----> mvn spring-boot:run
-	
+35 : what is command line runner in sprin-boot?
+----------------------------------------------
+--> 

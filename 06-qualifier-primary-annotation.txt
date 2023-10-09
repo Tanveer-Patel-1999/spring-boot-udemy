@@ -370,6 +370,8 @@ Real-world project example
 26 : @Configuration
 -------------------
 --> we can used @Configuration annotaion for "JAVA based configuration".
+--> it allow to register extra bean in to the context OR import addition configuartion classes.
+--> exam : securityConfig
 
 
 27: @EnableAutoConfiguration annotaion
