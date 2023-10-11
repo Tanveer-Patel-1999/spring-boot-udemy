@@ -1,12 +1,12 @@
 package com.tanveer.CurdDemo.model;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 
 @Data
-public class StudentRequest extends StudentResponse {
+@AllArgsConstructor
+public class StudentRequest  {
     private String firstName;
     private String lastName;
     private String email;
-
-
 }

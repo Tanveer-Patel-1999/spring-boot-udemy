@@ -1,0 +1,58 @@
+																	Exception handling in spring boot
+																	=================================
+																	
+1  : how to handle an exception and return error as JSON?
+---------------------------------------------------------
+--> Handle a exception and return error as JSON.
+--> example
+				{
+					"status" : 404,
+					"message" : " student id is no found : 1999",
+					"timeStamp: : 12345677
+				}
+				
+2 : development process of handle an exception?
+---------------------------------------------
+1 : create a custom error response class.
+2 : create a cutsom exception class.
+3 : updtae a rest service to handle an exception.
+4 : Add an exception handler method using @ExceptionHandler annoation.
+
+3 : what is used of custom error response class?
+------------------------------------------------
+--> The custom error response class will be sent back to client as JSON.
+
+@Data
+public class StudentErrorResponse {
+    private Integer status;
+    private String message;
+    private Long timeStamp;
+}
+
+
+4 : how to create cutsom exception class?
+---------------------------------------
+1 : craete StudentNotFoundException class
+2 : StudentNotFoundException extends RuntimeException
+3 : define a constructor
+	1 : right click ---> genrate ---> constructor
+
+exmaple : 
+
+
+
+public class StudentNotFoundException extends RuntimeException {
+    public StudentNotFoundException(String message){
+        super(message);
+    }
+}
+
+5 : what is used of exception handler methode ?
+------------------------------------------------
+--> define an exception handler method using @@ExceptionHandler annoation.
+--> Exception handler will return a ResponseEntity.
+--> ResponseEntity is wrapper for the HTTP response objcet.
+--> ResponseEntity provide cntrol to specify :
+	1 : HTTP status code
+	2 : HTTP header
+	3 : Response Body

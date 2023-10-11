@@ -1,0 +1,269 @@
+warning: LF will be replaced by CRLF in project/CurdDemo/src/main/java/com/tanveer/CurdDemo/CurdDemoApplication.java.
+The file will have its original line endings in your working directory
+[1mdiff --git a/09-Spring-boot-rest-web-services.txt b/09-Spring-boot-rest-web-services.txt[m
+[1mindex 994c4f2..3fcf63c 100644[m
+[1m--- a/09-Spring-boot-rest-web-services.txt[m
+[1m+++ b/09-Spring-boot-rest-web-services.txt[m
+[36m@@ -1,2 +1,388 @@[m
+ 																		Spring-boot-rest-web-services[m
+[31m-																		      ==============[m
+\ No newline at end of file[m
+[32m+[m																		[32m=============================[m
+[32m+[m[32m1 : what is full form of REST?[m
+[32m+[m[32m-----------------------------[m
+[32m+[m[32m--> REST : Representational State Transfer.[m
+[32m+[m[32m--> REST is a lighweight approach for communicating between applications [ clinet and server][m
+[32m+[m
+[32m+[m[32m2 : REST used which programming language?[m
+[32m+[m[32m----------------------------------------[m
+[32m+[m[32m--> Representational is language indpendent.[m
+[32m+[m[32m--> The Client applications can use any programming language[m
+[32m+[m[32m--> The Server applications can use any programming language[m
+[32m+[m
+[32m+[m[32m3 : REST application ussed which data formates?[m
+[32m+[m[32m----------------------------------------------[m
+[32m+[m[32m--> REST application can use any data format.[m
+[32m+[m[32m--> Commonly see XML and JSON[m
+[32m+[m[32m--> JSON is most popular and modern[m
+[32m+[m
+[32m+[m[32m4 : what is mean by JSON?[m
+[32m+[m[32m------------------------[m
+[32m+[m[32m--> JSON : javaScript Object Notation,[m
+[32m+[m[32m--> JSON is just plain text data.[m
+[32m+[m[32m--> JSON is used for storing and  exchange the data.[m
+[32m+[m[32m--> JSON is a language indpendent not just for JavaScript[m
+[32m+[m[32m--> JSON can use with any programming language : Java , C , C# ,python etc[m
+[32m+[m
+[32m+[m
+[32m+[m[32m5 : exmaple of json?[m
+[32m+[m[32m--------------------[m
+[32m+[m[32m--> Curley bracket define object in json.[m
+[32m+[m[32m--> Object members are name / value pairs.[m
+[32m+[m[32m--> name / value pairs are delimited by colon [ : ].[m
+[32m+[m[32m--> name is always in double-quotes [" "].[m
+[32m+[m
+[32m+[m[32mexmaple :[m
+[32m+[m	[32m {[m
+[32m+[m		[32m"id" : 1,[m
+[32m+[m		[32m"firstName" : "Tanveer",[m
+[32m+[m		[32m"lastName" : "Patel",[m
+[32m+[m		[32m"active" : true[m
+[32m+[m	[32m}[m
+[32m+[m[41m	[m
+[32m+[m[32m6 : JSON value?[m
+[32m+[m[32m--------------[m
+[32m+[m[32m--> Number : no quotes[m
+[32m+[m[32m--> String : in double quotes[m
+[32m+[m[32m--> boolean : true and false[m
+[32m+[m
+[32m+[m
+[32m+[m[32m7 : what do we call as REST Api?[m
+[32m+[m[32m-------------------------------[m
+[32m+[m[32m--> Generally all mean the same thing:[m[41m [m
+[32m+[m[32m--> REST Api[m
+[32m+[m[32m--> RESTful Api[m
+[32m+[m[32m--> REST Web Services[m
+[32m+[m[32m--> RESTful Web Services[m
+[32m+[m[32m--> REST Services[m
+[32m+[m[32m--> RESTful Services[m
+[32m+[m
+[32m+[m													[32mREST HTTP Basics[m
+[32m+[m													[32m================[m
+[32m+[m[32m8 : REST HTTP Basics?[m
+[32m+[m[32m--------------------[m
+[32m+[m[32m--> HTTP : hyper text transfer protocall[m
+[32m+[m[32m--> Most common use of REST is over HTTP[m
+[32m+[m[32m--> HTTP method for CRUD operations.[m
+[32m+[m
+[32m+[m[32m1 : POST : Create  a new resource [entity].[m
+[32m+[m[32m2 : GEt  : Read a list of resource or single resource [entity].[m
+[32m+[m[32m3 : PUT  : Update a existing resource [ entity].[m
+[32m+[m[32m4 : DELETE: Delete an existing resource [ entity ].[m
+[32m+[m
+[32m+[m
+[32m+[m[32m9 : HTTP messages?[m
+[32m+[m[32m-----------------[m
+[32m+[m
+[32m+[m[32mclient  		HTTP Request Message					server[m
+[32m+[m			[32m------------------------------------>[m[41m	[m
+[32m+[m[32mMY CRM app 											CRM Rest Services[m
+[32m+[m			[32m<--------------------------------------[m
+[32m+[m				[32mHTTP Response Message[m
+[32m+[m[41m				[m
+[32m+[m[32m-->  client send request to the server[m
+[32m+[m[32m--> server process a request and send a response to the client.[m
+[32m+[m
+[32m+[m
+[32m+[m[32m10 what is HTTP Request Message?[m
+[32m+[m[32m--------------------------------[m
+[32m+[m[32m--> HTTP Request Message have 3 main parts[m
+[32m+[m	[32m1 : Request line[m
+[32m+[m	[32m2 : Header variable[m
+[32m+[m	[32m3 : Message body[m
+[32m+[m[41m	[m
+[32m+[m[32m--> Request line    : it have HTTP methode : [ POST , GEt , DELETE ,PUT ][m
+[32m+[m[32m--> Header variable : it have request metadata . addition information about the request.[ size ,length , XML ,json of data][m
+[32m+[m[32m--> Message body    : it have contents of messages [ paylaod][m
+[32m+[m
+[32m+[m
+[32m+[m[32m11 what is HTTP Response Message?[m
+[32m+[m[32m--------------------------------[m
+[32m+[m[32m--> HTTP Response Message have 3 main parts[m
+[32m+[m	[32m1 : Response line[m
+[32m+[m	[32m2 : Header variable[m
+[32m+[m	[32m3 : Message body[m
+[32m+[m
+[32m+[m[32m--> Response line  : server protocall and status code [ 200 , 500, 404 etc][m[41m [m
+[32m+[m[32m--> Header variable : it have response metadata . addition information about the response.[m
+[32m+[m[32m--> Message body    : it have contents of messages [ paylaod][m
+[32m+[m
+[32m+[m[32m12 : HTTP Response Status code?[m
+[32m+[m[32m------------------------------[m
+[32m+[m[32m1 : 100-199 : informational[m
+[32m+[m[32m2 : 200-299 : Successful[m
+[32m+[m[32m3 : 300-399 : Redirection[m
+[32m+[m[32m4 : 400-499 : client error[m
+[32m+[m[32m5 : 500-599 : server error[m
+[32m+[m
+[32m+[m
+[32m+[m																		[32mSpring boot Rest controller[m
+[32m+[m																		[32m===========================[m
+[32m+[m[41m								[m
+[32m+[m
+[32m+[m
+[32m+[m[32m13: @Controller Annotation[m
+[32m+[m[32m------------------------------[m
+[32m+[m[32m--> Spring provides @Controller annotaion to make a java class as a spring MVC controller.[m
+[32m+[m[32m--> The @Controller annotaion indicates that a particular class serves the role of a controller.[m
+[32m+[m[32m--> @Controller class in spring that handles incoming Http request[m
+[32m+[m
+[32m+[m
+[32m+[m[32m@Controller[m
+[32m+[m[32mpublic class BookController {[m
+[32m+[m
+[32m+[m[32m/*[m[41m    [m
+[32m+[m[32mus must required three annotations[m
+[32m+[m[32m1 : @Controller : the class become a spring mvn controller class and handle the HTTP request[m
+[32m+[m[32m2 : @RequestMapping : it is used to map the incoming HTTp request[m
+[32m+[m[32m3 : @ResponseBody : it is used to convert the java object into JSON format and return the JSON object back to client .[m
+[32m+[m[32m */[m
+[32m+[m[41m [m
+[32m+[m[32m    @RequestMapping("/hello")[m
+[32m+[m[32m    @ResponseBody[m
+[32m+[m[32m    public String helloWorld(){[m
+[32m+[m[32m        return "hello from bookController....";[m
+[32m+[m[32m    }[m
+[32m+[m
+[32m+[m[32m    @RequestMapping("/book")[m
+[32m+[m[32m    @ResponseBody[m
+[32m+[m[32m    public Book getBook(){[m
+[32m+[m[32m        Book book = new Book(1L, "java","core java");[m
+[32m+[m[32m        return book;[m
+[32m+[m[32m    }[m
+[32m+[m[32m}[m
+[32m+[m
+[32m+[m
+[32m+[m[32m14 : what is a used of @ResponseBody :[m[41m [m
+[32m+[m[32m--------------------------------------[m
+[32m+[m[32m--> convert java object into json.[m
+[32m+[m[32m--> it is used " http message converter " to convert json to object or object to json[m
+[32m+[m
+[32m+[m
+[32m+[m[32m15 : what is a used of @RequestBody :[m[41m [m
+[32m+[m[32m-------------------------------------[m
+[32m+[m[32m--> convert the json into java object.[m
+[32m+[m
+[32m+[m
+[32m+[m[32m16 : @RestController[m
+[32m+[m[32m---------------------[m
+[32m+[m[32m--> In order to develop RestFull web services using spring MVC, we need to use @Controller and @ResponseBody annotaion.[m
+[32m+[m[32m--> Spring 4.0 introduced  @RestController annotaion , a specialized version of the @Controller.[m
+[32m+[m[32m--> using @RestController annotaion we does not need  to adding a @Controller and @ResponseBody annotaion.[m
+[32m+[m
+[32m+[m[32m--> @RestController is a combination of @Controller and @ResponseBody[m
+[32m+[m[32m@RestController = @Controller + @ResponseBody[m
+[32m+[m
+[32m+[m[32mnote : --> remember[m
+[32m+[m
+[32m+[m[32m--> if you want to develop RestFull web services using sprinng MVC then the class is annotated with @RestController.[m
+[32m+[m[32m--> if you want to develop spring MVC application then u can annotated class with @Controller.[m
+[32m+[m
+[32m+[m[41m	[m
+[32m+[m
+[32m+[m																		[32mjava JSON data  binding[m
+[32m+[m																		[32m=======================[m
+[32m+[m
+[32m+[m[32m17 : what is java JSON data binding?[m
+[32m+[m[32m------------------------------------[m
+[32m+[m[32m--> data binding is process of converting JSON data to a java pojo. or java pojo to the JSON data.[m
+[32m+[m[32mexmaple :[m
+[32m+[m		[32mJSON ---converting ---> java pojo[m
+[32m+[m[41m		[m
+[32m+[m[32m--> is is also known as Mapping , Serilization / Deserialization , Marshalling / Unmarshalling.[m
+[32m+[m
+[32m+[m
+[32m+[m[32m18 : JSON data binding with JackSon?[m
+[32m+[m[32m------------------------------------[m
+[32m+[m[32m--> jackson is used for data banding.[m
+[32m+[m[32m--> spring uses jackson project behind the scenes.[m
+[32m+[m[32m--> JackSon handle data binding between JSON and Java Pojo.[m
+[32m+[m[32m--> Spring boot starte web automatically includes dependency for JackSon.[m
+[32m+[m
+[32m+[m
+[32m+[m[32m19 : JackSon data binding?[m
+[32m+[m[32m--------------------------[m
+[32m+[m[32m--> by default , JackSon will call appropriate getter / setter method for data binding.[m
+[32m+[m
+[32m+[m
+[32m+[m[32m20 : JSON to Java Pojo data binding?[m
+[32m+[m[32m------------------------------------[m
+[32m+[m[32m--> convert JSON to java pojo : jackson by default call setter method on pojo.[m
+[32m+[m
+[32m+[m	[32m {[m
+[32m+[m		[32m"id" : 1,[m
+[32m+[m		[32m"firstName" : "Tanveer",  ---- call setter methods --------> java pojo class.[m
+[32m+[m		[32m"lastName" : "Patel",[m
+[32m+[m		[32m"active" : true[m
+[32m+[m	[32m }[m
+[32m+[m[41m	[m
+[32m+[m[32m21 : Java pojo to Json data binding?[m
+[32m+[m[32m-----------------------------------[m
+[32m+[m[32m--> convert java pojo to jackson : jackson by default call getter method on pojo.[m
+[32m+[m
+[32m+[m
+[32m+[m
+[32m+[m	[32m {[m
+[32m+[m		[32m"id" : 1,[m
+[32m+[m		[32m"firstName" : "Tanveer",  <---- call getter methods -------- java pojo class.[m
+[32m+[m		[32m"lastName" : "Patel",[m
+[32m+[m		[32m"active" : true[m
+[32m+[m	[32m }[m
+[32m+[m[41m	[m
+[32m+[m																			[32m @RequestMapping Annotation[m[41m [m
+[32m+[m																			[32m ==========================[m
+[32m+[m
+[32m+[m[41m [m
+[32m+[m[32m22 : @RequestMapping Annotation :[m[41m [m
+[32m+[m[32m--------------------------------[m
+[32m+[m[32m--> @RequestMapping annotaion is used to map web request to spring controller method.[m
+[32m+[m[32m--> @RequestMapping can be applied to the controller class as well as handler methods.[m
+[32m+[m[32m--> best used of @RequestMapping is to define " base uri " : @RequestMapping("/api")[m[41m  [m
+[32m+[m
+[32m+[m[32m@RequestMapping Annotation Example:-[m
+[32m+[m[32m-----------------------------------[m
+[32m+[m[32m1 : @RequestMapping with Class :->[m
+[32m+[m[32m----------------------------------[m
+[32m+[m[32mexmaple :[m
+[32m+[m
+[32m+[m[32m@RestController[m
+[32m+[m[32m@RequestMapping("/api")[m
+[32m+[m[32mpublic class PersonController {[m
+[32m+[m
+[32m+[m[32m    @RequestMapping("/person")[m
+[32m+[m[32m    public Person getPerson(){[m
+[32m+[m[32m        Person person = new Person(1L,"Tanveer",23);[m
+[32m+[m[32m        return person;[m
+[32m+[m[32m    }[m
+[32m+[m[32m}[m
+[32m+[m
+[32m+[m[32m2 :

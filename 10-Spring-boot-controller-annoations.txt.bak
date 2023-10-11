@@ -1,0 +1,365 @@
+																		Spring-boot-controller-annoations
+																		=================================
+																		
+
+1 : Stereotype annotaion
+========================
+--> spring provides three types of Stereotype annotaion
+1 : @Service
+2 : @Repository
+3 : @Controller 
+4 : @Component
+
+--> The main stereotype annotaion is " @Component ".
+--> These annotaion are used to create spring bean automatically in the application context(Spring IOC container).
+--> By using this annotaion , spring provides more stereotype meta annotaion such as @Service , @Repository , @Controller
+
+--> @Service annotaion is used to create spring bean at the Service layer
+--> @Repository annotaion is used to create spring bean for the repositories at the DAO layer.
+--> @Controller annotaion is used to create spring bean at the Controller layer
+ 
+controller : in the controller class we write a logic to handle the "Http Request" and Http resposnse.
+service : in the service class we write the all " Business logic".
+repository : in the repository interface we can do Db task.
+
+
+02: @Controller Annotation
+==========================
+--> Spring provides @Controller annotaion to make a java class as a spring MVC controller.
+--> The @Controller annotaion indicates that a particular class serves the role of a controller.
+--> @Controller class in spring that handles incoming Http request
+
+
+@Controller
+public class BookController {
+
+/*    
+us must required three annotations
+1 : @Controller : the class become a spring mvn controller class and handle the HTTP request
+2 : @RequestMapping : it is used to map the incoming HTTp request
+3 : @ResponseBody : it is used to convert the java object into JSON format and return the JSON object back to client .
+ */
+ 
+    @RequestMapping("/hello")
+    @ResponseBody
+    public String helloWorld(){
+        return "hello from bookController....";
+    }
+
+    @RequestMapping("/book")
+    @ResponseBody
+    public Book getBook(){
+        Book book = new Book(1L, "java","core java");
+        return book;
+    }
+}
+
+
+ 
+ 
+03 : @RequestMapping Annotation : 
+================================
+--> @RequestMapping annotaion is used to map web request to spring controller method.
+--> @RequestMapping can be applied to the controller class as well as handler methods.
+--> best used of @RequestMapping is to define " base uri " : @RequestMapping("/api")  
+
+@RequestMapping Annotation Example:-
+-----------------------------------
+1 : @RequestMapping with Class :->
+----------------------------------
+exmaple :
+
+@RestController
+@RequestMapping("/api")
+public class PersonController {
+
+    @RequestMapping("/person")
+    public Person getPerson(){
+        Person person = new Person(1L,"Tanveer",23);
+        return person;
+    }
+}
+
+2 : @RequestMapping with Method :->
+----------------------------------
+exmaple :
+
+@RestController
+public class PersonController {
+    
+    @RequestMapping("/person")
+    public Person getPerson(){
+        Person person = new Person(1L,"Tanveer",23);
+        return person;
+    }
+}
+
+3 : @RequestMapping with Multiple URI:-> @RequestMapping(value = {"/person", "/getPerson", "/data"})
+---------------------------------------------------------------------------------------------------
+exmaple:
+
+@RestController
+@RequestMapping("/api")
+public class PersonController {
+
+    @RequestMapping(value = {"/person", "/getPerson", "/data"})
+    public Person getPerson(){
+        Person person = new Person(1L,"Tanveer",23);
+        return person;
+    }
+}
+
+
+4 : @RequestMapping with HTTP Method :[ GET, POST, PUT, DELETE]
+---------------------------------------------------------------
+exmaple :
+
+@RestController
+@RequestMapping("/api")
+public class PersonController {
+
+    @RequestMapping(value = {"/person", "/getPerson", "/data"}, method = RequestMethod.GET)
+    public Person getPerson(){
+        Person person = new Person(1L,"Tanveer",23);
+        return person;
+    }
+}
+
+5 : @RequestMapping with Produces and Consumes:-->
+--------------------------------------------------
+produces : The produces attribute is produces a result in json format.
+            produces = MediaType.APPLICATION_JSON_VALUE
+
+consumes : The consumes attribute consumes the json that send by client
+            consumes = MediaType.APPLICATION_JSON_VALUE
+
+
+@RestController
+@RequestMapping("/api")
+public class PersonController {
+
+    @RequestMapping(value = {"/person", "/getPerson", "/data"},
+            method = RequestMethod.GET,
+            produces = MediaType.APPLICATION_JSON_VALUE
+    )
+    public Person getPerson(){
+        Person person = new Person(1L,"Tanveer",23);
+        return person;
+    }
+}
+
+
+04 : @RequestBody : 
+==================
+--> convert the json into java object.
+
+05 : @ResponseBody : 
+====================
+--> convert java object into json.
+--> it is used " http message converter " to convert json to object or object to json
+
+
+06 : @RestController
+=====================
+--> In order to develop RestFull web services using spring MVC, we need to use @Controller and @ResponseBody annotaion.
+--> Spring 4.0 introduced  @RestController annotaion , a specialized version of the @Controller.
+--> using @RestController annotaion we does not need  to adding a @Controller and @ResponseBody annotaion.
+
+--> @RestController is a combination of @Controller and @ResponseBody
+@RestController = @Controller + @ResponseBody
+
+note : --> remember
+
+--> if you want to develop RestFull web services using sprinng MVC then the class is annotated with @RestController.
+--> if you want to develop spring MVC application then u can annotated class with @Controller.
+
+
+07 : @GetMapping Annotation
+============================
+--> The GET HTTP request is used to get a single or mutiple resource.
+--> @GetMapping annotaion for mapping Http GET request onto specific handler method.
+--> @GetMapping annotaion is a shortcut for @RequestMapping(method = RequestMethod.GET).
+
+note : do not used consumes attribute with @GetMapping
+
+@GetMapping(value = "/allPerson",produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<Person> getAll(){
+        return Arrays.asList(
+                new Person(1L,"Tanveer",23),
+                new Person(2L,"Tanveer",23),
+                new Person(3L,"Tanveer",23)
+        );
+    }
+	
+
+08 : @PostMapping Annotation
+============================
+--> The POST HTTP method is used to create a resource.
+--> @PostMapping annotaion for mapping HTTP POST request onto specific handler method.
+--> @PostMapping annotaion is a shortcut for @RequestMapping(method = RequestMethod.POST).
+--> The @RequestBody annotaion is responsible for retrueving the HTTP request body and automatically converting it to the Java object.
+
+
+exmaple:
+
+    @PostMapping(value = "/create",consumes = MediaType.APPLICATION_JSON_VALUE,produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseStatus(value = HttpStatus.CREATED)
+    public Person createPerson(@RequestBody Person person){
+        Person person1 = new Person();
+        person1.setId(person.getId());
+        person1.setAge(person.getAge());
+        person1.setName(person.getName());
+        return person1;
+
+    }
+
+2 : using ResposeEntity<> class 
+
+exmaple:
+
+    @PostMapping(value = "/create",consumes = MediaType.APPLICATION_JSON_VALUE,produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Person> createPerson(@RequestBody Person person){
+        Person person1 = new Person();
+        person1.setId(person.getId());
+        person1.setAge(person.getAge());
+        person1.setName(person.getName());
+        return new ResponseEntity<>(person1,HttpStatus.CREATED);
+
+    }
+	
+09 : @PutMapping Annotation
+===========================
+--> The PUT HTTP method is used to update a resource.
+--> @PutMapping annotaion for mapping HTTP PUT request onto specific handler method.
+--> @PutMapping annotaion is a shortcut for @RequestMapping(method = RequestMethod.PUT).
+
+
+@PutMapping("/update/{id}")
+    public ResponseEntity<Person> updatePerson(@RequestBody Person person,@PathVariable Long id){
+        person.setId(id);
+        return ResponseEntity.ok(person);
+    }
+	
+	
+10 : @PathVariable annotaion :
+==============================
+http:localhost:8080/api/person/update/1 :-->  1 is the uri template variable
+
+1 : @PathVariable annotaion used on a method argument .
+2 : @PathVariable annotaion used to bind the value of URI template variable to the method argument.
+
+@PutMapping("/update/{id}")
+    public ResponseEntity<Person> updatePerson(@RequestBody Person person,@PathVariable Long id){
+        person.setId(id);
+        return ResponseEntity.ok(person);
+    }
+
+note : if the uri template name and method argument name is different  ; id == person_id
+then we need to pass the uri template variable name to a @PathVariable("uri_var_name) : @PathVariable("id") Long person_id
+ 
+@GetMapping("/person/{id}/{name}/{age}")
+    public ResponseEntity<Person> pathVariableDemo(@PathVariable("id") Long person_id, @PathVariable String name, @PathVariable Integer age){
+        Person person = new Person();
+        person.setId(person_id);
+        person.setName(name);
+        person.setAge(age);
+        return ResponseEntity.ok(person);
+
+    }
+	
+11 : @DeleteMapping Annotation
+===========================
+--> The DELETE HTTP method is used to delete a resource.
+--> @DeleteMapping annotaion for mapping HTTP DELETE request onto specific handler method.
+--> @DeleteMapping annotaion is a shortcut for @RequestMapping(method = RequestMethod.DELETE).
+
+ @DeleteMapping(value = "/delete/{id}")
+    public ResponseEntity<String> deletePerson(@PathVariable Long id){
+        return ResponseEntity.ok("Book deleted successfully...");
+    }
+	
+12 : @RequestParam Annotation
+=============================
+--> we can use @RequestParam to extract "query parameter" from thr request
+--> http://localhost:8080/api/person/query?firstName=Tanveer&lastName=Patel	
+--> firstName and lastName is the " query parameter".
+
+//http://localhost:808/api/person/query?id=1&name=Tanveer&age=24
+    @GetMapping("/person/query")
+    public ResponseEntity<Person> requestParamDemo(@RequestParam(name = "id") Long id,
+                                                   @RequestParam(name = "name") String name,
+                                                   @RequestParam(name = "age") Integer p_age){
+
+        Person person = new Person();
+        person.setId(id);
+        person.setName(name);
+        person.setAge(p_age);
+        return ResponseEntity.ok(person);
+
+    }
+	
+note : 
+1 : name of method argument and query parameter name should be different or same its our wish.
+2 : we can pass the in the url query parameter name should be same as we can pass the name inside the @RequestParam.
+
+
+13 : how to add response status code to the rest api?
+====================================================
+--> we can used two way
+
+1 :  19 : using @ResponseStatus()
+-->  @ResponseStatus(value = HttpStatus.CREATED)
+
+exmaple:
+
+    @PostMapping(value = "/create",consumes = MediaType.APPLICATION_JSON_VALUE,produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseStatus(value = HttpStatus.CREATED)
+    public Person createPerson(@RequestBody Person person){
+        Person person1 = new Person();
+        person1.setId(person.getId());
+        person1.setAge(person.getAge());
+        person1.setName(person.getName());
+        return person1;
+
+    }
+
+2 : using ResposeEntity<> class 
+
+exmaple:
+
+    @PostMapping(value = "/create",consumes = MediaType.APPLICATION_JSON_VALUE,produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Person> createPerson(@RequestBody Person person){
+        Person person1 = new Person();
+        person1.setId(person.getId());
+        person1.setAge(person.getAge());
+        person1.setName(person.getName());
+        return new ResponseEntity<>(person1,HttpStatus.CREATED);
+
+    }
+	
+	
+Q : 200 status code
+===================
+1 : 200 : OK
+2 : 201 : CREATED
+3 : 202 : ACCEPTED
+4 : 204 : NO CONTENT
+5 : 206 : PARTIAL CONTENT
+
+Q : 400 status code
+===================
+1 : 400 : Bad Request
+2 : 401 : Unauthorized
+3 : 403 : Forbidden
+4 : 404 : Not Found
+5 : 405 : Method Not Allowed:
+6 : 415 : Unsupported Media Type
+
+Q : 500 status code
+====================
+1 : 500 : Internal Server Error
+2 : 501 : Not Implemented
+3 : 502 : Bad Gateway
+4 : 503 : Service Unavailable
+5 : 505 : HTTP Version Not Supported:
+

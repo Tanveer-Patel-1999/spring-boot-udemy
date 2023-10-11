@@ -1,2 +1,361 @@
 																		Spring-boot-rest-web-services
 																		=============================
+1 : what is full form of REST?
+-----------------------------
+--> REST : Representational State Transfer.
+--> REST is a lighweight approach for communicating between applications [ clinet and server]
+
+2 : REST used which programming language?
+----------------------------------------
+--> Representational is language indpendent.
+--> The Client applications can use any programming language
+--> The Server applications can use any programming language
+
+3 : REST application ussed which data formates?
+----------------------------------------------
+--> REST application can use any data format.
+--> Commonly see XML and JSON
+--> JSON is most popular and modern
+
+4 : what is mean by JSON?
+------------------------
+--> JSON : javaScript Object Notation,
+--> JSON is just plain text data.
+--> JSON is used for storing and  exchange the data.
+--> JSON is a language indpendent not just for JavaScript
+--> JSON can use with any programming language : Java , C , C# ,python etc
+
+
+5 : exmaple of json?
+--------------------
+--> Curley bracket define object in json.
+--> Object members are name / value pairs.
+--> name / value pairs are delimited by colon [ : ].
+--> name is always in double-quotes [" "].
+
+exmaple :
+	 {
+		"id" : 1,
+		"firstName" : "Tanveer",
+		"lastName" : "Patel",
+		"active" : true
+	}
+	
+6 : JSON value?
+--------------
+--> Number : no quotes
+--> String : in double quotes
+--> boolean : true and false
+
+
+7 : what do we call as REST Api?
+-------------------------------
+--> Generally all mean the same thing: 
+--> REST Api
+--> RESTful Api
+--> REST Web Services
+--> RESTful Web Services
+--> REST Services
+--> RESTful Services
+
+													REST HTTP Basics
+													================
+8 : REST HTTP Basics?
+--------------------
+--> HTTP : hyper text transfer protocall
+--> Most common use of REST is over HTTP
+--> HTTP method for CRUD operations.
+
+1 : POST : Create  a new resource [entity].
+2 : GEt  : Read a list of resource or single resource [entity].
+3 : PUT  : Update a existing resource [ entity].
+4 : DELETE: Delete an existing resource [ entity ].
+
+
+9 : HTTP messages?
+-----------------
+
+client  		HTTP Request Message					server
+			------------------------------------>	
+MY CRM app 											CRM Rest Services
+			<--------------------------------------
+				HTTP Response Message
+				
+-->  client send request to the server
+--> server process a request and send a response to the client.
+
+
+10 what is HTTP Request Message?
+--------------------------------
+--> HTTP Request Message have 3 main parts
+	1 : Request line
+	2 : Header variable
+	3 : Message body
+	
+--> Request line    : it have HTTP methode : [ POST , GEt , DELETE ,PUT ]
+--> Header variable : it have request metadata . addition information about the request.[ size ,length , XML ,json of data]
+--> Message body    : it have contents of messages [ paylaod]
+
+
+11 what is HTTP Response Message?
+--------------------------------
+--> HTTP Response Message have 3 main parts
+	1 : Response line
+	2 : Header variable
+	3 : Message body
+
+--> Response line  : server protocall and status code [ 200 , 500, 404 etc] 
+--> Header variable : it have response metadata . addition information about the response.
+--> Message body    : it have contents of messages [ paylaod]
+
+12 : HTTP Response Status code?
+------------------------------
+1 : 100-199 : informational
+2 : 200-299 : Successful
+3 : 300-399 : Redirection
+4 : 400-499 : client error
+5 : 500-599 : server error
+
+
+																		Spring boot Rest controller
+																		===========================
+								
+
+
+13: @Controller Annotation
+------------------------------
+--> Spring provides @Controller annotaion to make a java class as a spring MVC controller.
+--> The @Controller annotaion indicates that a particular class serves the role of a controller.
+--> @Controller class in spring that handles incoming Http request
+
+
+@Controller
+public class BookController {
+
+/*    
+us must required three annotations
+1 : @Controller : the class become a spring mvn controller class and handle the HTTP request
+2 : @RequestMapping : it is used to map the incoming HTTp request
+3 : @ResponseBody : it is used to convert the java object into JSON format and return the JSON object back to client .
+ */
+ 
+    @RequestMapping("/hello")
+    @ResponseBody
+    public String helloWorld(){
+        return "hello from bookController....";
+    }
+
+    @RequestMapping("/book")
+    @ResponseBody
+    public Book getBook(){
+        Book book = new Book(1L, "java","core java");
+        return book;
+    }
+}
+
+
+14 : what is a used of @ResponseBody : 
+--------------------------------------
+--> convert java object into json.
+--> it is used " http message converter " to convert json to object or object to json
+
+
+15 : what is a used of @RequestBody : 
+-------------------------------------
+--> convert the json into java object.
+
+
+16 : @RestController
+---------------------
+--> In order to develop RestFull web services using spring MVC, we need to use @Controller and @ResponseBody annotaion.
+--> Spring 4.0 introduced  @RestController annotaion , a specialized version of the @Controller.
+--> using @RestController annotaion we does not need  to adding a @Controller and @ResponseBody annotaion.
+
+--> @RestController is a combination of @Controller and @ResponseBody
+@RestController = @Controller + @ResponseBody
+
+note : --> remember
+
+--> if you want to develop RestFull web services using sprinng MVC then the class is annotated with @RestController.
+--> if you want to develop spring MVC application then u can annotated class with @Controller.
+
+	
+
+																		java JSON data  binding
+																		=======================
+
+17 : what is java JSON data binding?
+------------------------------------
+--> data binding is process of converting JSON data to a java pojo. or java pojo to the JSON data.
+exmaple :
+		JSON ---converting ---> java pojo
+		
+--> is is also known as Mapping , Serilization / Deserialization , Marshalling / Unmarshalling.
+
+
+18 : JSON data binding with JackSon?
+------------------------------------
+--> jackson is used for data banding.
+--> spring uses jackson project behind the scenes.
+--> JackSon handle data binding between JSON and Java Pojo.
+--> Spring boot starte web automatically includes dependency for JackSon.
+
+
+19 : JackSon data binding?
+--------------------------
+--> by default , JackSon will call appropriate getter / setter method for data binding.
+
+
+20 : JSON to Java Pojo data binding?
+------------------------------------
+--> convert JSON to java pojo : jackson by default call setter method on pojo.
+
+	 {
+		"id" : 1,
+		"firstName" : "Tanveer",  ---- call setter methods --------> java pojo class.
+		"lastName" : "Patel",
+		"active" : true
+	 }
+	
+21 : Java pojo to Json data binding?
+-----------------------------------
+--> convert java pojo to jackson : jackson by default call getter method on pojo.
+
+
+
+	 {
+		"id" : 1,
+		"firstName" : "Tanveer",  <---- call getter methods -------- java pojo class.
+		"lastName" : "Patel",
+		"active" : true
+	 }
+	
+																			 @RequestMapping Annotation 
+																			 ==========================
+
+ 
+22 : @RequestMapping Annotation : 
+--------------------------------
+--> @RequestMapping annotaion is used to map web request to spring controller method.
+--> @RequestMapping can be applied to the controller class as well as handler methods.
+--> best used of @RequestMapping is to define " base uri " : @RequestMapping("/api")  
+
+@RequestMapping Annotation Example:-
+-----------------------------------
+1 : @RequestMapping with Class :->
+----------------------------------
+exmaple :
+
+@RestController
+@RequestMapping("/api")
+public class PersonController {
+
+    @RequestMapping("/person")
+    public Person getPerson(){
+        Person person = new Person(1L,"Tanveer",23);
+        return person;
+    }
+}
+
+2 : @RequestMapping with Method :->
+----------------------------------
+exmaple :
+
+@RestController
+public class PersonController {
+    
+    @RequestMapping("/person")
+    public Person getPerson(){
+        Person person = new Person(1L,"Tanveer",23);
+        return person;
+    }
+}
+
+3 : @RequestMapping with Multiple URI:-> @RequestMapping(value = {"/person", "/getPerson", "/data"})
+---------------------------------------------------------------------------------------------------
+exmaple:
+
+@RestController
+@RequestMapping("/api")
+public class PersonController {
+
+    @RequestMapping(value = {"/person", "/getPerson", "/data"})
+    public Person getPerson(){
+        Person person = new Person(1L,"Tanveer",23);
+        return person;
+    }
+}
+
+
+4 : @RequestMapping with HTTP Method :[ GET, POST, PUT, DELETE]
+---------------------------------------------------------------
+exmaple :
+
+@RestController
+@RequestMapping("/api")
+public class PersonController {
+
+    @RequestMapping(value = {"/person", "/getPerson", "/data"}, method = RequestMethod.GET)
+    public Person getPerson(){
+        Person person = new Person(1L,"Tanveer",23);
+        return person;
+    }
+}
+
+5 : @RequestMapping with Produces and Consumes:-->
+--------------------------------------------------
+produces : The produces attribute is produces a result in json format.
+            produces = MediaType.APPLICATION_JSON_VALUE
+
+consumes : The consumes attribute consumes the json that send by client
+            consumes = MediaType.APPLICATION_JSON_VALUE
+
+
+@RestController
+@RequestMapping("/api")
+public class PersonController {
+
+    @RequestMapping(value = {"/person", "/getPerson", "/data"},
+            method = RequestMethod.GET,
+            produces = MediaType.APPLICATION_JSON_VALUE
+    )
+    public Person getPerson(){
+        Person person = new Person(1L,"Tanveer",23);
+        return person;
+    }
+}
+
+																				@Path variable
+																				==============
+																				
+23 : what is used of @Path variable?
+-------------------------------------
+http:localhost:8080/api/person/update/1 :-->  1 is the uri template variable
+
+1 : @PathVariable annotaion used on a method argument .
+2 : @PathVariable annotaion used to bind the value of URI template variable to the method argument.
+
+@PutMapping("/update/{id}")
+    public ResponseEntity<Person> updatePerson(@RequestBody Person person,@PathVariable Long id){
+        person.setId(id);
+        return ResponseEntity.ok(person);
+    }
+
+note : if the uri template name and method argument name is different  ; id == person_id
+then we need to pass the uri template variable name to a @PathVariable("uri_var_name) : @PathVariable("id") Long person_id
+ 
+@GetMapping("/person/{id}/{name}/{age}")
+    public ResponseEntity<Person> pathVariableDemo(@PathVariable("id") Long person_id, @PathVariable String name, @PathVariable Integer age){
+        Person person = new Person();
+        person.setId(person_id);
+        person.setName(name);
+        person.setAge(age);
+        return ResponseEntity.ok(person);
+
+    }
+	
+24 : used of @PathVariable annotaion?
+------------------------------------
+--> retrieve a single resource by id : retrieve a student by student_id
+--> in uri template :/api/students/{studentId} -------> {} in uri template known as path variable.
+					/api/students/1
