@@ -1,0 +1,375 @@
+																	create a spring boot real time project
+																	======================================
+1 : step to create spring boot real time project?
+------------------------------------------------
+1 : dependency required
+-----------------------
+	1 : web dependency
+	2 : jpa dependency
+	3 : postgress / sql driver
+	4 : lombook
+
+2 : create a packages
+--------------------
+	1 : controller
+	2 : service
+	3 : repository
+	4 : exception
+	5 : model
+	6 : entity
+	
+3 : edit a application.properties
+---------------------------------
+	1 : url
+	2 : username
+	3 : password
+	4 : ddl-auto : create a table into data base
+	
+	
+spring.datasource.url=jdbc:postgresql://localhost:5432/CrudDb
+spring.datasource.username=postgres
+spring.datasource.password=123456
+spring.jpa.hibernate.ddl-auto=update
+	
+4 : create an Entity or Table
+-----------------------------
+@Entity
+@Data
+@Table(name = "Employee_table")
+public class EmployeeEntity {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    @Column(name = "first_name")
+    private String firstName;
+    @Column(name = "last_name")
+    private String lastName;
+    @Column(name = "email")
+    private String email;
+}
+
+5 : check the table is created or not in the db
+-----------------------------------------------
+--> mvn spring-boot:run
+
+6 : create a model for that entity class
+---------------------------------------
+@Data
+public class EmployeeResponse {
+    private Long id;
+}
+
+
+@Data
+public class EmployeeRequest extends EmployeeResponse {
+    private String firstName;
+    private String lastName;
+    private String email;
+}
+
+7: create a repository interface
+--------------------------------
+@Repository
+public interface EmployeeRepository extends JpaRepository<EmployeeEntity, Long> {
+    
+}
+
+8 : create a serviec class
+--------------------------
+
+@Service
+public class EmployeeService {
+
+    private final EmployeeRepository employeeRepository;
+
+    @Autowired
+    public EmployeeService(EmployeeRepository employeeRepository) {
+        this.employeeRepository = employeeRepository;
+    }
+}
+
+
+9 : create a controller class
+------------------------------
+@RestController
+@RequestMapping("/api")
+public class EmployeeController {
+    
+    private final EmployeeService employeeService;
+
+    @Autowired
+    public EmployeeController(EmployeeService employeeService) {
+        this.employeeService = employeeService;
+    }
+}
+
+					================================ start a doing coding ==================================
+					
+					
+															create
+															------
+					
+1 : controller
+--------------
+1 : create
+---------
+   @PostMapping("/employees")
+    public ResponseEntity<EmployeeResponse> createEmployee(@RequestBody EmployeeRequest employeeRequest){
+        EmployeeResponse response = employeeService.createEmployee(employeeRequest);
+        return new ResponseEntity<>(response, HttpStatus.CREATED);
+    }
+
+
+
+2 : service
+----------
+create
+-----
+1 : create a private methode for ModelToEntity
+    private EmployeeEntity mapModelToEntity(EmployeeRequest employeeRequest) {
+        EmployeeEntity employeeEntity = new EmployeeEntity();
+        employeeEntity.setFirstName(employeeRequest.getFirstName());
+        employeeEntity.setLastName(employeeRequest.getLastName());
+        employeeEntity.setEmail(employeeRequest.getEmail());
+        return employeeEntity;
+    }
+	
+2 : assign the methode to the entity instance
+--------------------------------------------
+	EmployeeEntity employeeEntity = mapModelToEntity(employeeRequest);
+	
+3 : save the entity into the respository
+----------------------------------------
+	employeeRepository.save(employeeEntity);
+
+
+
+												update :
+												------
+1 : controller
+--------------
+    @PutMapping("/employees/{id}")
+    public ResponseEntity<EmployeeRequest> updateEmployee(@RequestBody EmployeeRequest employeeRequest, @PathVariable Long id){
+        EmployeeRequest request = employeeService.updateEmployee(employeeRequest,id);
+        return new ResponseEntity<>(request,HttpStatus.OK);
+    }
+
+
+2 : service 
+----------
+1 : create a private methode for ModelToEntityForUpdate
+
+  private EmployeeEntity mapModelToEntityForUpdate(Long id, EmployeeRequest employeeRequest) {
+        EmployeeEntity employeeEntity = new EmployeeEntity();
+        employeeEntity.setId(id);
+        employeeEntity.setFirstName(employeeRequest.getFirstName());
+        employeeEntity.setLastName(employeeRequest.getLastName());
+        employeeEntity.setEmail(employeeRequest.getEmail());
+        return employeeEntity;
+
+    }
+	
+2 : first check id is not equal to null
+--------------------------------------
+if (id != null)
+
+3 : then check id is present or not in the database
+-------------------------------------------------
+Optional<EmployeeEntity> optionalEmployeeEntity = employeeRepository.findById(id);
+ if (optionalEmployeeEntity.isPresent()) {
+ 
+ }
+
+4 : assign the methode to the entity instance
+--------------------------------------------
+    EmployeeEntity employeeEntity = mapModelToEntityForUpdate(id, employeeRequest);
+
+
+5 : save the entity into the respository
+----------------------------------------
+	employeeRepository.save(employeeEntity);
+	
+6 : throw an exception if id is not found
+----------------------------------------                
+throw new EmployeeNotFountException("Employee not found with id: " + id);
+
+
+
+
+										getAll
+										------
+1 :controller
+-------------
+ @GetMapping("/employees")
+    public ResponseEntity<List<EmployeeRequest>> getAllEmployee(){
+        List<EmployeeRequest> employeeRequests = employeeService.getAllEmployee();
+        return new ResponseEntity<>(employeeRequests,HttpStatus.OK);
+    }
+
+2 :service
+----------
+1 : create a private methode for EntityTOModel
+
+    private EmployeeRequest mapEntityToModel(EmployeeEntity employeeEntity) {
+        EmployeeRequest employeeRequest = new EmployeeRequest();
+        employeeRequest.setId(employeeEntity.getId());
+        employeeRequest.setFirstName(employeeEntity.getFirstName());
+        employeeRequest.setLastName(employeeEntity.getLastName());
+        employeeRequest.setEmail(employeeEntity.getEmail());
+        return employeeRequest;
+    }
+
+
+
+2 : find all object from a repository
+-----------------------------------
+    public List<EmployeeRequest> getAllEmployee() {
+
+        log.info("Retrieving all Employee");
+        List<EmployeeRequest> employeeRequests = employeeRepository.findAll()
+                .stream()
+                .map(this::mapEntityToModel)
+                .toList();
+
+        log.info("Retrieved {} Employee", employeeRequests.size());
+        return employeeRequests;
+    }
+
+
+
+
+															getById
+															-------
+1 : controller
+-------------
+
+    @GetMapping("/employees/{id}")
+    public ResponseEntity<EmployeeRequest> getEmployeeByID(@PathVariable Long id){
+        EmployeeRequest employeeRequest = employeeService.getEmployeeByID(id);
+        return new ResponseEntity<>(employeeRequest,HttpStatus.OK);
+    }
+
+
+2 : service
+----------
+
+1 : create a private methode for EntityTOModel
+----------------------------------------------
+
+    private EmployeeRequest mapEntityToModel(EmployeeEntity employeeEntity) {
+        EmployeeRequest employeeRequest = new EmployeeRequest();
+        employeeRequest.setId(employeeEntity.getId());
+        employeeRequest.setFirstName(employeeEntity.getFirstName());
+        employeeRequest.setLastName(employeeEntity.getLastName());
+        employeeRequest.setEmail(employeeEntity.getEmail());
+        return employeeRequest;
+    }
+
+
+2 : check id is present or not in the db
+-----------------------------------------
+  Optional<EmployeeEntity> questionOption = employeeRepository.findById(id);
+        if (questionOption.isPresent()) {
+            
+        }
+		
+3: return the entityToModel method.
+-----------------------------------
+            return mapEntityToModel(questionOption.get());
+
+4 : if id is not found throw an exception
+----------------------------------------
+throw new EmployeeNotFountException("Employee with ID : " + id + " not found");
+
+
+
+														deleteById
+														----------
+controller
+----------
+@DeleteMapping("/employees/{id}")
+    public ResponseEntity<Void> deleteByID(@PathVariable Long id){
+        employeeService.deleteByID(id);
+        return ResponseEntity.ok().build();
+    }
+	
+	
+service
+-------
+1 : check id is present in the database or not 
+--------------------------------------
+
+  Optional<EmployeeEntity> questionOption = employeeRepository.findById(id);
+        if (questionOption.isPresent()) {
+            
+        }
+		
+2 : if present the delete operation perform
+-------------------------------------------
+            employeeRepository.deleteById(id);
+
+3 : if id is not found throw an exception
+----------------------------------------
+throw new EmployeeNotFountException("Employee with ID : " + id + " not found");
+
+
+
+													getByName
+													========
+1 : repository
+--------------
+
+@Repository
+public interface EmployeeRepository extends JpaRepository<EmployeeEntity, Long> {
+
+//     here findByFirstName : FirstName is field of entity class
+    Optional<EmployeeEntity> findByFirstName(String name);
+}
+
+
+2 : controller
+--------------
+//    when u custom query for to retrieve then used proper URl : /employees/name/{name}
+    @GetMapping("/employees/firstName/{name}")
+    public ResponseEntity<EmployeeRequest> getByName(@PathVariable String name){
+        EmployeeRequest employeeRequest = employeeService.getByName(name);
+        return new ResponseEntity<>(employeeRequest,HttpStatus.OK);
+    }
+	
+note : URl is so important 
+      when u custom query for to retrieve then used proper URl : /employees/name/{name}
+	  
+3 : service
+-------------
+2 : service
+----------
+
+1 : create a private methode for EntityTOModel
+----------------------------------------------
+
+    private EmployeeRequest mapEntityToModel(EmployeeEntity employeeEntity) {
+        EmployeeRequest employeeRequest = new EmployeeRequest();
+        employeeRequest.setId(employeeEntity.getId());
+        employeeRequest.setFirstName(employeeEntity.getFirstName());
+        employeeRequest.setLastName(employeeEntity.getLastName());
+        employeeRequest.setEmail(employeeEntity.getEmail());
+        return employeeRequest;
+    }
+
+
+2 : check id is present or not in the db
+-----------------------------------------
+  Optional<EmployeeEntity> questionOption = employeeRepository.findByFirstName(name);
+        if (questionOption.isPresent()) {
+            
+        }
+		
+3: return the entityToModel method.
+-----------------------------------
+            return mapEntityToModel(questionOption.get());
+
+4 : if id is not found throw an exception
+----------------------------------------
+throw new EmployeeNotFountException("Employee with name : " + name + " not found");
+

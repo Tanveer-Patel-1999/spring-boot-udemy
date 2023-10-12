@@ -403,6 +403,45 @@ example:
 --> Must be define inside our RepositoryInterface.
 
 
+17 : spring boot application architecture?
+-----------------------------------------
+
+Controller <-------------> Service <----------------> Repository [ DAO ] <-----------> DB
+
+
+18 : JPA repository ?
+--------------------
+--> Spring Data jpa provides the interface : JpaRepository
+--> jpa Repository provides a methoed
+	1 : findAll
+	2 : findById
+	3 : deleteById
+	4 : save
+--> this help to eliminate boilerplate code
+
+===========================================================================
+
+19 : Spring data Rest ?
+----------------------
+--> you required 3 things
+1 : employeeEntity
+2 : JpaRepository
+3 : add dependency starter-data-rest into pom.
+	<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-rest</artifactId>
+		</dependency> 
+
+19 : Advanced Features of Data Rest and JpaRepository?
+----------------------------------------------------
+--> Pagination , sorting and searching
+--> Extending and adding a custom queries with JPQL
+
+==============================================================================
+
+
+
+
 								MySql database
 								==============
 -->MySql database for CRUD project.

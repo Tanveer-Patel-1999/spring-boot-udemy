@@ -13,10 +13,10 @@
 				
 2 : development process of handle an exception?
 ---------------------------------------------
-1 : create a custom error response class.
-2 : create a cutsom exception class.
+1 : create a custom error response class. : StudentErrorResponse
+2 : create a cutsom exception class.      : StudentNotFoundException
 3 : updtae a rest service to handle an exception.
-4 : Add an exception handler method using @ExceptionHandler annoation.
+4 : create a GlobalExceptionHandler class : GlobalExceptionHandler
 
 3 : what is used of custom error response class?
 ------------------------------------------------
@@ -36,18 +36,74 @@ public class StudentErrorResponse {
 2 : StudentNotFoundException extends RuntimeException
 3 : define a constructor
 	1 : right click ---> genrate ---> constructor
+4 : add @ResponseStatus annoation at a class level.
+
 
 exmaple : 
 
-
-
+@ResponseStatus(value = HttpStatus.NOT_FOUND)
 public class StudentNotFoundException extends RuntimeException {
-    public StudentNotFoundException(String message){
+
+    public StudentNotFoundException(String message) {
         super(message);
+    }
+
+    public StudentNotFoundException(String message, Throwable cause) {
+        super(message, cause);
+    }
+
+    public StudentNotFoundException(Throwable cause) {
+        super(cause);
     }
 }
 
-5 : what is used of exception handler methode ?
+
+
+@ResponseStatus(value = HttpStatus.NOT_FOUND)
+public class StudentNotFoundException extends RuntimeException {
+    public StudentNotFoundException(String message) {
+        super(message);
+    }
+
+    public StudentNotFoundException(String message, Throwable cause) {
+        super(message, cause);
+    }
+
+    public StudentNotFoundException(Throwable cause) {
+        super(cause);
+    }
+}
+
+
+
+5 : craete GlobalExceptionHandler class ?
+----------------------------------------
+--> GlobalExceptionHandler is a commone class where we can handle the all exception.[ specific exception or globalException]
+--> annotated that class with @RestControllerAdvice or @ControllerAdvice
+--> @ControllerAdvice it is used handle the exception handle golbally
+--> 
+    1 : create an exceptionMethod()
+    2 : exceptionMethod() have two parameters
+        1 : exception class name : StudentNotFoundException
+        2 : WebRequest : we can retrieve an url from web request and send the url to the client
+    3 : create an Object of ErrorDetails class and fill the details
+    4 : return the object
+    5 : annotated a method with : @ExceptionHandler(ExceptionClassName.class)
+     
+@RestControllerAdvice
+public class GlobalExceptionHandler {
+
+    @ExceptionHandler(StudentNotFoundException.class)
+    public ResponseEntity<StudentErrorResponse> handelNotFoundException(StudentNotFoundException exception){
+        StudentErrorResponse errorResponse = new StudentErrorResponse();
+        errorResponse.setStatus(HttpStatus.NOT_FOUND.value());
+        errorResponse.setMessage(exception.getMessage());
+        errorResponse.setTimeStamp(System.currentTimeMillis());
+        return new ResponseEntity<>(errorResponse,HttpStatus.NOT_FOUND);
+    }
+}
+
+6 : what is used of exception handler methode ?
 ------------------------------------------------
 --> define an exception handler method using @@ExceptionHandler annoation.
 --> Exception handler will return a ResponseEntity.
@@ -56,3 +112,23 @@ public class StudentNotFoundException extends RuntimeException {
 	1 : HTTP status code
 	2 : HTTP header
 	3 : Response Body
+	
+7 : how to handle MethodArgumentMismatchException ? or localhost:8080/api/student/dsfa or generic exception handler?
+					OR
+	global exception handler
+-------------------------------------------------------------------------------------------------------------------
+
+-- > create a GlobalExceptionHandler class to handle all the exception.
+--> annotated GlobalExceptionHandler class @RestControllerAdvice
+--> create a handler method to handle to handle the exception.
+--> handler method annotated with @ExceptionHandler
+--> @ControllerAdvice is a real time use of AOP.
+ 
+  @ExceptionHandler(Exception.class)
+    public ResponseEntity<StudentErrorResponse> handleBadRequest(Exception exception){
+        StudentErrorResponse errorResponse = new StudentErrorResponse();
+        errorResponse.setStatus(HttpStatus.BAD_REQUEST.value());
+        errorResponse.setMessage(exception.getMessage());
+        errorResponse.setTimeStamp(System.currentTimeMillis());
+        return new ResponseEntity<>(errorResponse,HttpStatus.BAD_REQUEST);
+    }
