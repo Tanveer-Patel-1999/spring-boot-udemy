@@ -1,2 +1,8 @@
-package com.example.tanveer.onetoonemapping.model;public class InstructorResponse {
+package com.example.tanveer.onetoonemapping.model;
+
+import lombok.Data;
+
+@Data
+public class InstructorResponse {
+    private Long id;
 }

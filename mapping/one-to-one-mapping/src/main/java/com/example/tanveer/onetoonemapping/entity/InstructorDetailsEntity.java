@@ -11,8 +11,11 @@ public class InstructorDetailsEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
-    @Column(name="youtube_channel")
+
+    @Column(name = "youtube_channel")
     private String youtubeChannel;
+
     @Column(name = "hobby")
     private String hobby;
+
 }
