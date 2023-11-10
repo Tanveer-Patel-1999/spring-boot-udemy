@@ -56,7 +56,8 @@ public class InstructorService {
                 .stream()
                 .map(this::entityToModel)
                 .toList();
-        log.info("Retrieved {} Employee", instructorRequestList.size());
+        log.info("Retrieved all Employee : {} ", instructorRequestList.size());
+        log.info(instructorRequestList.toString());
         return instructorRequestList;
     }
 
@@ -75,8 +76,6 @@ public class InstructorService {
         }
         return instructorRequest;
     }
-
-
 
     public void deleteById(Long id) {
         Optional<InstructorEntity> optionalInstructorEntity = instructorRepository.findById(id);

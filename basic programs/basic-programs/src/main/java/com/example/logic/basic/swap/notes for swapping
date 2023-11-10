@@ -1,0 +1,8 @@
+swapping a two numbers
+======================
+--> they are total 5 way to swap a two number
+1 : using third variable
+2 : using plus and minus operator : without using third variable [ + , - , - ]
+3 : using multiplication and division operator : without using third variable [* , / , /] : a and b should not be zero
+4 : using bitwise operator ( ^ ) : without using third variable [^ , ^ , ^]
+5 : using single statement :  b = a+b-(a=b); [ + ,-, ( , = ]

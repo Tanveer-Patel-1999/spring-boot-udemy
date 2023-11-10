@@ -1,0 +1,68 @@
+Memroy management and Gc interview questions
+--------------------------------------------
+01 : what is mean by Memroy Management?
+02 : what is mean by grabage in programming?
+03 : who is responsible for collect the grabage?
+04 : what is grabage collection and what are it advantages?
+05 : when JVM run garbage collector?
+06 : need of grabage collector?
+07 : when we say that object is eligible fo garbage collector?
+08 : who manage the garbage collector?
+09 : where are object created in memomry on stack or heap?
+10 : which part of the memomry is involved in grabage collection stack or heap?
+11 : what is responsibility of GC?
+12 : is garabage collector a forground or background thread?
+13 : what is daemon thread?
+14 : how Grabage collection works algorithum?
+16 : can you name commonly used oracles JVM And which Gc strategey is used by it?
+17 : why most GC uses generational GC strategey? [inside the methode object are created are short lived ]
+18 : how many way to make an object eligible for garbage collector?
+19 : what is mean by Nullifying the refernce varaibale?
+20 : what is Reasign the refernce varaibale ?
+21 : what is mean that object created inside a method?
+22 : what is mean by Island of isolation?
+23 : when usless object is destroye by Gc?
+24 : when JVM run GC?
+25 : whar are various methods for requesting JVM to run garbage collector?
+26 : what is mean by Singleton class?
+27 : what is mean by factory method?
+28 : which approach is recomnaded to request Jvm to run garbage collector?
+29 : what is mean by finalization or finalize() method?
+30 : what is mean by cleanup activities?
+31 : who call the finalize() methode?
+32 : differnce when program call finalize() and Gc call finalize() methode.
+33 : jVM will ignore every exception or only uncaught exception while executing finalization() methode?
+34 : cases about finalize() methode?
+35 : Exactly at what time JVm Run Garbage collector?
+36 : In which order Garbage collector identifies Eligible objcets?
+37 : in which order Garbage collector Destroys the object?
+38 : Wheather Garbage collector destroye All eligible objects or not?
+39 : what is the algoruthm follwed by garbage collector?
+40 : How many times does the grabage collector call the finalize() method for an object?
+41 :  What is the heap memory in Java?
+42 : What is  Young generation Java?
+43 : What is Eden Space in Java Heap?
+43 : What is Survivor Space?
+44 : What is Survivor Space?
+46 : what is mean by Old generation ?
+47 :  What is the difference between the Young Generation and Old Generation in Java?
+48 : What is minorGC and majorGC?
+49 : What is the stack memory in Java?
+50 : What is the difference between heap and stack memory in Java?
+51 : explain Generational GC strategey and HotSpot heap strcture used bt these Gc? [ memomry management ]
+			or 
+   : Explain Gc process?
+52 : What is the PermGen space in Java?
+53 : What is Metaspace in Java?
+54 : What is the difference between the PermGen space and Metaspace in Java?
+55 : what is mean by runtime constant pool?
+56 : What is a memory leak in Java?
+57 : What is a memory footprint in Java?
+
+
+
+
+
+
+
+

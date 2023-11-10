@@ -1,6 +1,5 @@
 package com.example.tanveer.onetoonemapping.controller;
 
-import com.example.tanveer.onetoonemapping.model.InstructorRequest;
 import com.example.tanveer.onetoonemapping.model.InstructorRequestToMany;
 import com.example.tanveer.onetoonemapping.model.InstructorResponse;
 import com.example.tanveer.onetoonemapping.service.CourseService;
@@ -45,5 +44,4 @@ public class InstructorToManyController {
         InstructorRequestToMany instructorRequestToMany = courseService.updateById(request, id);
         return new ResponseEntity<>(instructorRequestToMany,HttpStatus.OK);
     }
-
 }

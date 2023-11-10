@@ -1,0 +1,132 @@
+version: '3.7'
+
+services:
+  postgres:
+    image: postgres:latest
+    environment:
+      POSTGRES_DB: CrudDb
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 123456
+    ports:
+      - "5432:5432"
+#    volumes:
+#      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+    networks:
+      - mynetwork
+
+
+  spring-microservice:
+    build:
+      dockerfile: Dockerfile.txt  # Specify the Dockerfile for gRPC
+    environment:
+      POSTGRES_HOST: postgres
+      POSTGRES_PORT: 5432
+      POSTGRES_DB: CrudDb
+#      POSTGRES_USER: postgres
+#      POSTGRES_PASSWORD: postgres
+    depends_on:
+      - postgres
+    volumes:
+      - /.env
+    ports:
+      - "9091:9091"  # Replace with the gRPC server's port
+    networks:
+      - mynetwork
+
+  datadog-agent:
+    image: datadog/agent:latest
+    environment:
+      - DD_API_KEY=5767aa9ad954e14d70ec551c97244cf8
+      - DD_LOGS_ENABLED=true
+      - DD_LOGS_CONFIG_CONTAINER_COLLECT_ALL=true
+      - DD_PROCESS_AGENT_ENABLED=true
+      - DD_DOCKER_LABELS_AS_TAGS={"my.custom.label.team":"demo-team"}
+      - DD_TAGS='env:dd101-dev'
+      - DD_HOSTNAME=dd101-dev-host
+    labels:
+      com.datadoghq.tags.env: 'dd101-dev'
+      com.datadoghq.tags.service: 'one-to-one-mapping'
+      my.custom.label.team: 'demo-team'
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /proc/:/host/proc/:ro
+      - /sys/fs/cgroup/:/host/sys/fs/cgroup:ro
+    networks:
+      - mynetwork
+
+networks:
+  mynetwork:
+
+#
+#version: '3.7'
+#
+#services:
+#  postgres:
+#    image: postgres:latest
+#    environment:
+#      POSTGRES_DB: CrudDb
+#      POSTGRES_USER: postgres
+#      POSTGRES_PASSWORD: 123456
+#    ports:
+#      - "5432:5432"
+#    #    volumes:
+#    #      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+#    networks:
+#      - mynetwork
+#
+#
+#  datadog-agent:
+#    image: datadog/agent:latest
+#    environment:
+#      - DD_API_KEY=f0a4fc3f91234c4cd81cca536df4a2a8
+#      - DD_LOGS_ENABLED=true
+#      - DD_LOGS_CONFIG_CONTAINER_COLLECT_ALL=true
+#      - DD_PROCESS_AGENT_ENABLED=true
+#      - DD_APM_NON_LOCAL_TRAFFIC=true
+#      - DD_DOCKER_LABELS_AS_TAGS={"my.custom.label.team":"demo-team"}
+#      - DD_APM_ENABLED=true
+#      - DD_TAGS='env:dd101-dev'
+#      - DD_HOSTNAME=dd101-dev-host
+#    labels:
+#      com.datadoghq.tags.env: 'dd101-dev'
+#      com.datadoghq.tags.service: 'one-to-one-mapping'
+#      my.custom.label.team: 'demo-team'
+#    volumes:
+#      - /var/run/docker.sock:/var/run/docker.sock
+#      - /proc/:/host/proc/:ro
+#      - /sys/fs/cgroup/:/host/sys/fs/cgroup:ro
+#
+#    networks:
+#      - mynetwork
+#
+#  spring-microservice:
+#    build:
+#      dockerfile: Dockerfile.txt  # Specify the Dockerfile for gRPC
+#    environment:
+#      POSTGRES_HOST: postgres
+#      POSTGRES_PORT: 5432
+#      POSTGRES_DB: CrudDb
+#      DD_SERVICE: spring-microservice
+#      DD_ENV: dd101-dev
+#      DD_LOGS_INJECTION: true
+#      DD_TRACE_SAMPLE_RATE: 1
+#      DD_PROFILING_ENABLED: true
+#      DD_AGENT_HOST: datadog
+#    #      POSTGRES_USER: postgres
+#    #      POSTGRES_PASSWORD: postgres
+#    depends_on:
+#      - postgres
+#      - datadog-agent
+#    labels:
+#      com.datadoghq.ad.logs: '[{"source": "java", "service": "java-microservice"}]'
+#    volumes:
+#      - /.env
+#    ports:
+#      - "1111:1111"  # Replace with the gRPC server's port
+#    networks:
+#      - mynetwork
+#
+#
+#
+#networks:
+#  mynetwork:

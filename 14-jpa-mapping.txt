@@ -1,0 +1,331 @@
+													jpa-mapping
+													===========
+													
+1 : advanced mapping in spring-boot?
+------------------------------------
+--> they are three typres of advanced mapping
+	1 : One-to-one
+	2 : One-to-many 
+	3 : many-to-one
+	4 : many-to-many
+	
+2 : one-to-one?
+---------------
+--> one employee have only one address.
+--> Emplye have employee_address. 	
+
+2 : one-to-many?
+---------------
+--> one employee have many address.
+--> Emplye have employee_address.
+
+3 : many-to-many?
+---------------
+--> one employee have many address , an address have many employee.
+--> Emplye have employee_address
+
+
+4 : primary key?
+---------------
+-->  a table have only one primary key.
+--> primary key must be unique
+
+5 : Foreign key?
+---------------
+--> a table have mutiple number of foreign key.
+--> foreign key is used to link a two table together.
+--> foreign key in one table refers to primary key in another table.
+
+6 : what is mean by cascade?
+---------------------------
+--> using cascade we can perform same operation to the related entities.
+example : if we save an employee it save address_details.
+
+7 : cascade types:
+-----------------
+--> they are 7 type :
+
+1 : PERSIST : If entity is persist / saved , related entity will also be persisted.
+2 : REMOVE  : if entity is remove  / deleted , related entity will also be deleted.
+3 : REFRESH : if entity is refreshed , related entity will also be refreshed.
+4 : DETAch  : if entity is detached , then related entity will also be detached.
+5 : MERGE   : if entity is merge then related entity also be merged.
+6 : ALL     : it is combination of all above cascade type.
+
+7 : what is FetchType in JPA?
+-----------------------------
+---> It is used for SELECT operations for Association mapping or Collection Mapping
+---> If we want to fetch only parent data or fetch both parent and child data.
+
+
+8 : they are two types of FetchType
+-----------------------------------
+	1 : EAGER  : will retrieve everything
+	--> It is load parent Entity along with its associate child entities.[parent + child ]
+	
+	2 : LAZY : will retrieve on request
+	--> It is load only parent entity from DB on select operations [ load parent data only]
+	--> later calling child get() method , load the child entity . [ when we call child class getter() method child entity is laoded]
+
+9 : what is the default FetchType in jpa?
+------------------------------------------
+--> default FetchType based on operation we do.
+--> LAZY  : [to-many]
+	ont-to-many and many-to many
+	
+--> EAGER : [to-one]
+	one-to-one and many-to-one
+	
+10 : Entity lifecycle
+--------------------
+1 : Detach : if entity is detached  , it is not associated with hibernate sessions.
+2 : Merge  : if instance is detached from hibernate sessions , then merg will reattach to sessions.
+3 : Persist: Trasitions new instance to manageed state. wil save in the db
+4 : remove : Trasitions manageed entity to be removed. will delete from db.
+5 : refresh: Relaod objcet with data from Db. prevent stale data.
+
+
+11 : what is mean by EAGER laoding?
+----------------------------------
+--> Eager laoding will laod all dependent entities
+--> load instructor and all of theier courses at onces.
+	
+12 : what is mean by LAZY laoding?
+---------------------------------
+--> LAZY laoding will load the main entity first.
+--> lazy loading laod dependent entities on demand.
+	
+13 : what is best practice for laoding entities?
+----------------------------------------------
+--> Load a data when absolutely nedded.
+--> prefer Lazy laoding instead of Eager loading.
+
+14 : fatch Type?
+----------------
+--> when you define the mapping relationship
+--> you can specify the fetch type : EAGER or LAZY
+
+15 : how to override a FetchType ?
+--------------------------------
+@ManyToOne(fatch = FetchType.Lazy)
+@OneToOne(fatch = FetchType.Lazy)
+
+									One-to-one mapping
+									===================
+exmaple:
+-------
+1 : create a entity : table
+---------------------------
+	1 : instructor			: @OneToOne , @JoinCloumn , instructor_details
+	2 : instructor_details
+									
+exmaple : uni-directional mapping
+---------------------------------
+@Entity
+@Data
+@Table(name = "instructor")
+public class InstructorEntity {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
+    private Long id;
+
+    @Column(name = "first_name")
+    private String firstName;
+
+    @Column(name = "last_name")
+    private String lastName;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "instructor_details_id")
+    private InstructorDetailsEntity instructorDetails;
+
+}
+-------------------------------------
+
+@Data
+public class InstructorRequest extends InstructorResponse{
+
+    private String firstName;
+    private String lastName;
+    private InstructorDetailsRequest instructorDetail;
+}
+
+---------------------------------------------------
+@Entity
+@Data
+@Table(name = "instructor_detail")
+public class InstructorDetailsEntity {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
+    private Long id;
+
+    @Column(name = "youtube_channel")
+    private String youtubeChannel;
+
+    @Column(name = "hobby")
+    private String hobby;
+}
+-------------------------------
+
+@Data
+public class InstructorDetailsRequest extends InstructorDetailResponse{
+    private String youtubeChannel;
+    private String hobby;
+}
+
+
+							exmaple : bi-directional mapping
+							---------------------------------
+--> use : @OneToOne(mappedBy="instructorDetails")
+
+@Entity
+@Data
+@Table(name = "instructor")
+public class InstructorEntity {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
+    private Long id;
+
+    @Column(name = "first_name")
+    private String firstName;
+
+    @Column(name = "last_name")
+    private String lastName;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "instructor_details_id")
+    private InstructorDetailsEntity instructorDetails;
+
+}
+
+
+@Entity
+@Data
+@Table(name = "instructor_detail")
+public class InstructorDetailsEntity {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
+    private Long id;
+
+    @Column(name = "youtube_channel")
+    private String youtubeChannel;
+
+    @Column(name = "hobby")
+    private String hobby;
+	
+	
+	@OneToOne(mappedBy="instructorDetails" , cascade=CascadeType.All)
+	private InstructorEntity instructor;
+}
+
+ --> mappedBy is used to refers " instructorDetails" properties in the " InstructorEntity " class.
+ 
+ mappedBy
+ ========
+ --> mappedBy tells Hibernate 
+	1 :  look at the instructorDetails propertry in the InstructorEntity class.
+	
+	@OneToOne(mappedBy="instructorDetails" , cascade=CascadeType.All)
+	private InstructorEntity instructor;
+	
+	2 : Use information from thr InstructorEntity class @JoinCloumn
+	
+	@OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "instructor_details_id")
+    private InstructorDetailsEntity instructorDetails;
+	
+	
+	
+	
+	
+	
+								one-to-many mapping
+								===================
+								
+--> instructor can have many courses : bidirection
+--> instructor have many courses
+--> many course have one instructor
+
+real world project requirement
+----------------------------------
+1 : if you delete an instructor , do not delete the course
+2 : if you delete a course , do not delete the instructor
+3 : its means that do not apply "cascading delete"
+
+
+
+@Entity
+@Data
+@Table(name = "instructor")
+public class InstructorEntity {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
+    private Long id;
+
+    @Column(name = "first_name")
+    private String firstName;
+
+    @Column(name = "last_name")
+    private String lastName;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "instructor_details_id")
+    private InstructorDetailsEntity instructorDetails;
+
+    @OneToMany(mappedBy = "instructor", cascade = { CascadeType.PERSIST , CascadeType.MERGE , CascadeType.DETACH , CascadeType.REFRESH})
+    private List<CourseEntity> courses;
+
+    // methode for bidirectional relationship
+    public void add(CourseEntity courseEntity){
+        if (courses == null){
+            courses = new ArrayList<>();
+        }
+        courses.add(courseEntity);
+        courseEntity.setInstructor(this);
+    }
+
+---------------------------
+
+@Data
+public class InstructorRequest extends InstructorResponse{
+
+    private String firstName;
+    private String lastName;
+    private InstructorDetailsRequest instructorDetail;
+    private List<InstructorRequest> courses;
+
+}
+
+---------------------------------------
+
+@Entity
+@Data
+@Table(name = "course")
+public class CourseEntity {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Column(name = "title")
+    private String title;
+
+    @ManyToOne(fetch = FetchType.Lazy , cascade = { CascadeType.PERSIST , CascadeType.MERGE ,
+                            CascadeType.DETACH , CascadeType.REFRESH})
+    @JoinColumn(name = "instructor_id")
+    private InstructorEntity instructor;
+}
+---------------------------
+
+@Data
+public class CourseRequest extends CourseResponse {
+
+    private String title;
+    private InstructorRequest instructor;
+}
+

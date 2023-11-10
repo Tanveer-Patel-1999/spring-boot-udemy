@@ -1,0 +1,77 @@
+										Garbage collections / collector
+										===============================
+										
+
+GC : destroye the usless object ,
+garbage collector is the part of Jvm
+
+													1 : introduction
+													===================
+													
+
+1 : what is mean by grabage in programming?
+----------------------------------------
+--> usless object are called garbage.
+--> the object which are not using , west or usless such types of object are grabage.
+
+2 : who is responsible for collect the grabage?
+-----------------------------------------------
+--> grabage collector is responsible for collect the grabage or usless object.
+												
+3 : what is garbage collection ?
+------------------------------
+--> garbage collector will collect the grabage or usless object and the process is called garbage collections.
+
+4 : need of grabage collector?
+-----------------------------
+old language
+----------
+--> in old language : C++ programmer is responsible for create an object using new keyword.
+	Student stud = new Student();
+--> delete keyword is used to delete the object in the old language.
+--> beacause of programmer negelating deleting the usless object memomry will full.application will be down we will get " out of memomry error " in old language.
+
+java
+----
+--> in java programmer is responsible for creating the object.
+--> in java usless object are destroye by grabage collector. 
+--> GC is always running in the background.
+
+--> the need of garbage collector to destroye usless object.
+--> GC is always running in the background.
+--> background executing threads are called as "Daemon Threads".
+--> Garbage collector is Daemon threads beacause it is always running in the background.
+
+5 : when we say that object is eligible fo garbage collector?
+-------------------------------------------------------------
+--> if the object does not conatin any refernce varaibale is eligible for GC.
+
+
+												way to make an object eligible for garbage collector
+												=====================================================
+												
+
+6 : how many way to make an object eligible for garbage collector?
+------------------------------------------------------------------
+--> they are four way are there :
+	1 : Nullifying the refernce varaibale
+	2 : reasign the refernce varaibale
+	3 : object created inside a method
+	4 : Island of isolation
+	
+	
+7 : what is mean by Nullifying the refernce varaibale?
+-----------------------------------------------------
+	Student s1 = new Student();
+	Student s2 = new Student();
+--> in above no object is eligible for GC 
+--> if we assign s1 object to null [ s1 = null; ] s1 is eligible for GC. 
+
+3 : The methods for requesting JVM to garbage collector
+=======================================================
+	1 : System.gc()
+	2 : Runtime class gc()
+	
+4 : finalization
+================
+ 

@@ -1,0 +1,157 @@
+						java memory management [ JRE ]
+						======================
+						
+						
+--> java memory divided into two parts
+--------------------------------------
+1 : heap memory
+2 : stack memory
+
+===========================================================================================================================
+
+									heap memory
+									---------
+--> heap memory used to store class object.
+--> heap memory used to JRE class.
+--> Gc run on heap memory only to free some memory by destroying some object which dont have any reference.
+--> Heap memory is size is more as compaire to stack memory.
+	
+--> heap memory divided into two parts
+1 : Young generation
+2 : Old generation
+
+
+										1 : Young generation
+										--------------------
+
+--> when we create a class object first it will be stored in the " young generation ".
+--> Young generation is divided into three parts
+	1 : Eden memory
+	2 : Survivour memory S0
+	3 : Survivour memory S1
+	
+	
+											1 : Eden memory
+											---------------
+
+--> new object always store into the Eden memory.
+
+											Minor GC
+											--------------
+--> minor Gc will be performed automatically 
+--> minor Gc will performed inside a young generation.
+--> minor Gc check what happing inside the young generation
+--> young generation memory getting full minor Gc shift all the Survivour object into the S0 
+--> if S0 is also filled then shift all Survivour object to S1 memory.
+
+
+
+											grabage collector
+											-----------------
+--> the object doest not have reference the Grabga collect will destroy that object to free the memory.
+ Test t  = new Test();
+ t = null // eligeable for GC
+ 
+ 
+										2 : Old generation
+										------------------
+										
+---> if young generation memory is full [ s0 and s1 ] java will shift all the object into Old generation.
+
+										major Gc
+										---------
+--> when old generation memory is full java is called gc is called major Gc.
+--> major Gc take longer time.
+--> major Gc will performed inside an old generation.
+--> time out error is getting by Major Gc [ to destroy lot of object]
+
+
+										memory pool
+										-----------
+--> memory pool are used to stored " immutable objcet"
+--> exm : String class and string pool
+--> it will define by run time by jVm memory manager.
+
+=======================================================================================================================================
+									
+									permonent generation : meta space
+									=================================
+--> entire metaData of classes , method store into permonent generation .
+--> permonent generation is not a part of heap memory.
+--> it will generated at run time,
+
+									methode Area
+									============
+--> method area is a part of permonent generation.
+--> method area will store complete class strucutre.
+--> method area will store static variable.
+--> method area will store all constant.
+
+										runtime constant pool
+										====================
+--> runtime constant pool is the part of permonent generation.
+--> runtime constant pool is used to store static and constant variable.
+
+
+================================================================================================
+
+										stack memory
+										=============
+--> stack memory is used to execute threads.
+--> methodes specific value are stored into the stack memory.
+--> local variable are stored into the stack memory.
+--> store objcet reference which are referencing some object on heap memory.[ reference will be stored into stack memory ]
+--> stack memory will store the value in LIFO : last in first out.
+Test t1 = new Test();
+--> t1 is reference.
+--> stack memory is size is less as compaire to heap memory.
+
+
+public void m1()
+{
+int a = 10;
+}
+
+--> jvm ic create a " methode block " for method.
+
+
+heap
+====
+1 : storage    : heap memory will be stored newly created object , global variable .
+2 : order      : heap memory will maintain  complex machanisum ] --> Eden , Survivour s1 , Survivour s2
+3 : life       : heap memory life is throught out an applictaion / program execution.
+4 : efficiency : heap memory is slower then stack.
+5 : allocation deallocation : object created : allocation , Gc is called : deallocation is happened.
+
+
+stack
+=====
+1 : storage     : all the methode , local variable , reference variable are stored in the stack memory.
+2 : order       : stack memory will maintain LIFO
+3 : life 		: life of stack me : current methode
+4 : efficiency  : stack memory is faster.
+5 : allocation and deallocation : automatically allocation [ method is called allocated and return deallocation ]
+
+public class Tets
+	{
+		int a , b;
+		
+		void m1 () {
+			int x = 2 ;
+		}
+		
+		void m1 () {
+			int y = 20 ;
+		}
+		
+		void m1 () {
+			int z = 21 ;
+		}
+	}
+	
+
+ meta space : it only for static
+===========
+1 : store entire metaData of classes 
+1 : store static variable and method , constant variable
+

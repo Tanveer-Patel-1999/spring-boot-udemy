@@ -12,10 +12,10 @@ public class CourseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "title")
-    private String title;
+    @Column(name = "title_name")
+    private String titleName;
 
-    @ManyToOne(cascade = { CascadeType.PERSIST , CascadeType.MERGE ,
+    @ManyToOne(fetch = FetchType.LAZY ,  cascade = { CascadeType.PERSIST , CascadeType.MERGE ,
                             CascadeType.DETACH , CascadeType.REFRESH})
     @JoinColumn(name = "instructor_id")
     private InstructorEntity instructor;

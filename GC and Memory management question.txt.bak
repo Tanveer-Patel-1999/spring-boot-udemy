@@ -1,0 +1,447 @@
+01 :  What is memory management in Java?
+---------------------------------------
+--> Memory management in Java is the process of allocating memory for objects during runtime, and deallocating memory for objects that are no longer in use.
+--> Java uses an automatic memory management system known as the Garbage Collector to perform this task.
+
+02 : what is mean by grabage in programming?
+----------------------------------------
+--> usless object are called garbage.
+--> the object which are not using , west or usless such types of object are grabage.
+
+03 :  who is responsible for collect the grabage?
+-----------------------------------------------
+--> grabage collector is responsible for collect the grabage or usless object.
+
+
+04 : what is grabage collection?
+--------------------------------
+--> Gc is java is automatic process  , identifying which object are in used and which are not , and deleting the unused object.
+
+05 : when JVM run garbage collector?
+-----------------------------------
+--> when program run  with low memomry jvm run gc.
+
+06 :  need of grabage collector?
+----------------------------------
+old language
+----------
+--> in old language [ C++ ] : programmer is responsible for create an object using new keyword.
+	Student stud = new Student();
+--> delete keyword is used to delete the object in the old language.
+--> beacause of programmer negelating deleting the usless object memomry will full application will be down we will get " out of memomry error " in old language.
+
+java
+----
+--> in java programmer is responsible for creating the object.
+--> in java usless object are destroye by grabage collector. 
+--> GC is always running in the background.
+
+--> the need of garbage collector to destroye usless object.
+--> GC is always running in the background.
+--> background executing threads are called as "Daemon Threads".
+--> Garbage collector is Daemon threads beacause it is always running in the background.
+
+07 : when we say that object is eligible fo garbage collector?
+-------------------------------------------------------------
+--> if the object does not conatin any refernce varaibale is eligible for GC.
+
+08 : who manage the garbage collector?
+-------------------------------------
+--> the JVM controls the garbage collector.
+--> Jvm is decides when to run the grabage collector.
+--> JVm run the garbage collector when it realizes that the memomry is running low.
+
+09 : where are object created in memomry on stack or heap?
+--------------------------------------------------------
+--> whenever an object is created is always stored in the heap space and stack memomry conatin the refernce to it.
+--> stack memomry contains only local varaibale , refernce varaibale
+--> all object are always create on heap memomry.
+
+10 : which part of the memomry is involved in grabage collection stack or heap?
+-----------------------------------------------------------------------------
+--> heap memomry is involved in grabage collection.
+
+11 : what is responsibility of GC?
+--------------------------------
+--> destroye useless object.
+
+12 : is garabage collector a forground or background thread?
+------------------------------------------------------------
+--> grabage collector is background / daemon thread.
+
+13 : what is daemon thread?
+---------------------------
+--> daemon thread is a background thread.
+--> A daemon threa run behind the application
+--> daemon thread started by JVM.
+--> daemon thread is stop when all forground thraed is stop.
+
+14 : how Grabage collection works algorithum?
+-----------------------------------
+--> Gc work in 2 step 
+
+1 : Marking : 
+-------------
+--> unrefernced object in heap are identifies and marked as ready for garabage collection.
+
+2 : Deletion
+-------------
+--> in this step object are marked previously is deleted.
+
+16 : can you name commonly used oracles JVM And which Gc strategey is used by it?
+--------------------------------------------------------------------------------
+--> "HotSpot" is most commonly used JVM by oracle.
+--> All HotSpot Garbage collector implements " generational Garbage collection strategey ".
+--> generationa GC strategey categorizes the object by age.
+
+17 : why most GC uses generational GC strategey? [inside the methode object are created are short lived ]
+------------------------------------------------
+--> Reason for most GC using generational Gc strategey is that most of objects are short lived and hence die shortly just after memomry allocation.
+--> This is called as " DIE YOUNG "
+
+18 : how many way to make an object eligible for garbage collector?
+------------------------------------------------------------------
+--> they are four way are there :
+	1 : Nullifying the refernce varaibale
+	2 : reasign the refernce varaibale
+	3 : object created inside a method
+	4 : Island of isolation
+	
+	
+19 : what is mean by Nullifying the refernce varaibale?
+-----------------------------------------------------
+	Student s1 = new Student();
+	Student s2 = new Student();
+--> in above no object is eligible for GC 
+
+--> if we assign s1 refernce varaibale to null [ s1 = null; ] s1 object is eligible for GC. 
+
+20 : what is Reasign the refernce varaibale ?
+--------------------------------------------
+	Student s1 = new Student();
+	Student s2 = new Student();
+--> in above no object is eligible for GC 
+--> reasign a refernce to new object 
+	s1 = new Student();
+--> here one object eligible for Gc  : top of the above s1 is eligible for Gc
+	s1 = s2 ;
+--> here two object eligible for Gc  : top of the above s1 and s2is eligible for Gc
+
+21 : what is mean that object created inside a method?
+-----------------------------------------------------
+--> the object created inside a method are default eligible for garbage colletor onces a methode execution is complete.
+
+class Test
+{
+	public static void main(String args[])
+		{
+			m1();
+		}
+		
+	public static void m1()
+		{
+			Student s1 = new Student();
+			Student s2 = new Student();
+		}
+}
+
+--> here two object are eligible for Gc : s1 and s2
+--> here s1 and s2 are local varaibale 
+--> when we executing a method a local varaibale is created and onces a methode execution is complete  local varaibale is gone.
+
+
+22 : what is mean by Island of isolation?
+----------------------------------------
+--> 
+
+class Test
+{
+	Test i ;
+	public static void m1()
+		{
+			Test t1 = new Test();
+			Test t2 = new Test();
+			Test t3 = new Test();
+			
+			t1.i = t2;
+			t2.i = t3;
+			t3.i = t1;
+			
+			t1 = null;
+			t2 = null;
+		}
+}
+--> here no object is eligible fo Gc.
+
+class Test
+{
+	Test i ;
+	public static void m1()
+		{
+			Test t1 = new Test();
+			Test t2 = new Test();
+			Test t3 = new Test();
+			
+			t1.i = t2;
+			t2.i = t3;
+			t3.i = t1;
+			
+			t1 = null;
+			t2 = null;
+			t3 = null;
+		}
+}
+--> here 3 object is eligible for gc.
+note :
+1 : the object does not have any refernce varaibale is eligible for garbage collector.
+2 : the object have refernce varaibale hava  it may be an eligible for garbage collector ( if all refernce are internal refernces) . [Island of isolation ].
+
+23 : when usless object is destroye by Gc?
+----------------------------------------
+--> when we make object is eligible for GC 
+--> GC not imedaitely destroye the usless object
+--> when JVM run the Gc then only object is destroye.
+
+24 : when JVM run GC?
+--------------------
+--> but when exactly JVM runs Gc we cant Expect.
+--> It depends on JVM and varied from JVM to Jvm.
+
+
+25 : whar are various methods for requesting JVM to run garbage collector?
+-------------------------------------------------------------------------
+--> we can requesting JVM to run garbage collector but there is no guarauntee JVM will accepet or not.
+--> But most of time JVM will accepet our request.
+
+--> we can request by two ways
+1 : By using system class : System.gc
+2 : By using Runtime class : Runtime.getRuntime().gc()
+
+1 : By using system class : System.gc
+------------------------------------
+--> System class conatin a static method gc() to request a JVM to Run GC.
+exm :	System.gc();
+--> System.gc()  method is used to request Jvm to Run garbage collector.
+--> in system class gc() method is a static method we can call using class name or refernce varaibale.
+
+2 : By using Runtime class : Runtime.getRuntime().gc()
+------------------------------------------------------
+--> A java Application can communicate with JVM by using Runtime object.
+--> Runtime class is present in java.lang package and it is a singleton class.
+--> we can create a Runtime object by using getRuntime() factory method.
+exm :	Runtime r = Runtime.getRuntime(); 
+--> in Runtime class gc() methode is instance methode we can call using refernce varaibale.
+
+ 
+--> onces we got Runtime object we can call following method on that object
+1 : r.freeMemory()  : Returns Numbers of bytes of Free memomry in the heap.
+2 : r.totalMemory() : Returns Total number of Bytes of Heap (Heap size)
+3 : r.gc()          : Requesting  JVM to run Garbage collector.
+
+
+26 :  what is mean by Singleton class?
+-------------------------------------
+--> For any class if we are allowed to create only one object such type of class is called as singleton class.
+--> we can create singleton class object using new keyword or constructor.
+--> we can create a singleton class objcet using factory method.
+exma :
+		1 : Runtime
+
+
+27 : what is mean by factory method?
+-----------------------------------
+--> using class name we are calling a methode that method return same class object such types of methode is called as factory method.
+exm :
+	Runtime r = Runtime.getRuntime();
+	
+	
+28 : which approach is recomnaded to request Jvm to run garbage collector?
+--------------------------------------------------------------------------
+
+--> whith respective to performance go for Runtime class approach
+--> system class internaly call Runtime.getRuntime.gc() methode that for we can used Runtime class approach.
+
+29 : what is mean by finalization or finalize() method?
+-------------------------------------------------------
+--> Gc collector always call finalize() methode just before destroying an object to perform clean up activities onces finalize() method is complete Gc will destroye the object.
+
+ 
+30 : what is mean by cleanup activities?
+---------------------------------------
+--> resource deallocation activities
+like :
+	1 : close data base connection
+	2 : close network connection
+
+
+31 : who call the finalize() methode?
+-----------------------------------
+-->finalize() is called by programmer or Gc.
+1 : if programmer call the finalize() method object can not destroye it execute a normal methode.
+2 : if Gc call finalize() methode after complete the finalize() method object will be destroye.
+
+
+32 : differnce when program call finalize() and Gc call finalize() methode.
+---------------------------------------------------------------------------
+programmer
+----------
+	1 : when programmer call finalize() objcet can not be destroye.
+	2 : when programmer call finalize() and while execution of finalize() methode if exception is occure and it is uncaught program will terminate abnormally.
+
+
+Garbage collector
+-----------------
+	1 : when GC call finalize() after completion of finalize() method object will be destroye.
+	2 : when garbage collector called finalize() and while executing finalize() method if an exception raised which is uncaught [ arithamtic exception ] JVM will ignore that exception and rest of programmer will be normally.
+	
+33 : jVM will ignore every exception or only uncaught exception while executing finalization() methode?
+------------------------------------------------------------------------------------------------------
+--> Jvm ignore only uncaught exception .
+
+34 : cases about finalize() methode?
+------------------------------------
+--> they are mainly 4 cases
+1 : The object belong to which class that class finalize() methode will be call
+2 : calling finalize() methode explicitly but object can not be destroye it execute like a normal method.
+3 :
+	--> If the Programmer call finalize() method explicitly and while excuting finalize() method if exception occures and which is uncaught [ there is no catch block ] then program will terminate abnormally.
+	--> If grabage collect call finalize() method while excuting finalize() method if exception raised and which is uncaught then Jvm ignore that exception and rest of the program will be execute normally. 
+4 : on any objcet GC call finalize() method only onces, Even though that objcet Eligible for Gc Mutiple times.
+
+
+35 : Exactly at what time JVm Run Garbage collector?
+---------------------------------------------------
+--> it is varied from JVM to JVM
+
+36 : In which order Garbage collector identifies Eligible objcets?
+----------------------------------------------------------------
+--> it is varied from JVM to JVM
+
+37 : in which order Garbage collector Destroys the object?
+----------------------------------------------------------
+--> there is no guarauntee to destroye eligible object in order.
+
+38 : Wheather Garbage collector destroye All eligible objects or not?
+--------------------------------------------------------------------
+--> there is no guarauntee to destroye all eligible object some time 15 , 60 etc.
+
+39 : what is the algoruthm follwed by garbage collector?
+--------------------------------------------------------
+--> mark-sweep
+--> it is varied from JVM to JVM but most of Gc follow " mark-sweep " algorithum.
+
+40 : How many times does the grabage collector call the finalize() method for an object?
+----------------------------------------------------------------------------------------
+--> only one time the finalize() methode will be call.
+
+
+
+41 :  What is the heap memory in Java?
+--------------------------------------
+--> heap memory used to store all object.
+--> Heap memory is size is more as compaire to stack memory.
+--> heap memory divided into two parts
+	1 : Young generation
+	2 : Old generation
+
+42 : What is  Young generation Java?
+------------------------------------
+--> when we create a class object first it will be stored in the " young generation ".
+--> Young generation is divided into three parts
+	1 : Eden memory
+	2 : Survivour memory S0
+	3 : Survivour memory S1
+	
+	
+43 : What is Eden Space in Java Heap?
+------------------------------------
+--> Eden space is part of Heap Memory.
+--> Whenever a new object is created the space is allocated in the Eden memory. 
+--> garbage collector runs for the first time, the unused objects are eligible for garbage collected.
+	
+	
+43 : What is Survivor Space?
+---------------------------
+--> Survivor Space is part of Heap memory. 
+--> There are two types of Survivor space
+--> i.e. first survivor and second survivor space.
+--> The alive objects which were not garbage collected from the Eden memory, are moved to first survivor space.
+--> When the garbage collector runs on the first survivor space, the unused objects will be eligible for garbage collected.
+--> But the objects which survived the first survivor space, will be moved to the second survivor space.
+
+44 : what is mean by Old generation ?
+------------------------------------
+---> if young generation memory is full [ s0 and s1 ] java will shift all the object into Old generation.
+
+45 :  What is the difference between the Young Generation and Old Generation in Java?
+-------------------------------------------------------------------------------------
+--> The Young Generation in Java is the area of memory where new objects are allocated.
+--> The Old Generation, also known as the Tenured Generation, is the area of memory where long-lived objects are stored.
+--> Objects that survive multiple garbage collection cycles are eventually moved from the Young Generation to the Old Generation.
+
+46 : What is minorGC and majorGC?
+-------------------------------
+minorGC : 
+----------
+--> When the garbage collector is run on either Eden space, first or second survivor space (younger generation) then it is called as minorGC.
+
+majorGC :
+---------
+--> When the garbage collector is run on older generation then it is called as majorGC.
+
+fullGc :
+--------
+when the garbage collector is run on both younger as well as older generation then it is called fullGC.
+
+
+
+47 : What is the stack memory in Java?
+-------------------------------------
+--> The stack memory in Java is the area of memory where primitive data types and references to objects are stored.
+--> The stack memory is used to store local variables and method calls.
+--> stack memory is size is less as compaire to heap memory.
+--> stack memory will store the value in LIFO : last in first out.
+
+20 : What is the difference between heap and stack memory in Java?
+------------------------------------------------------------------
+--> The heap memory is used to store objects, while the stack memory is used to store primitive data types and references to objects.
+--> Objects are allocated on the heap and references to those objects are stored on the stack.
+
+
+heap
+====
+1 : storage    : heap memory will be stored newly created object , global variable .
+2 : order      : heap memory will maintain  complex machanisum ] --> Eden , Survivour s1 , Survivour s2
+3 : life       : heap memory life is throught out an applictaion / program execution.
+4 : efficiency : heap memory is slower then stack.
+5 : allocation deallocation : object created : allocation , Gc is called : deallocation is happened.
+
+
+stack
+=====
+1 : storage     : all the methode , local variable , reference variable are stored in the stack memory.
+2 : order       : stack memory will maintain LIFO
+3 : life 		: life of stack me : current methode
+4 : efficiency  : stack memory is faster.
+5 : allocation and deallocation : automatically allocation [ method is called allocated and return deallocation ]
+
+	
+
+49 : explain Generational GC strategey and HotSpot heap strcture used bt these Gc? [ memomry management ]
+			or 
+   : Explain Gc process?
+------------------------
+1 : new object created.
+2 : new object in store in young generationa [ eden memomry ].
+3 : when Eden space is completely fill up " Minor Gc is triggered " by jvm.
+4 : In "minor Gc"  objcet present in Eden memomry unrefernced objects are deleted and refernce objects are moved to first survivor space (s0) marking them age is 1.
+5 : when again eden space is filled up then again " Minor Gc is triggered " by jvm.
+6 : unrefernced objcet from enden space is deleted.
+7 : refernced objcet are again moved to survivor space but this time to second survivor space (s1) marking them age as 1.
+8 : first survivor space ( s0 ) is again scanned in this cycle unrefernced objcet are deleted and refernced objcet moved from s0 to s1 and age is incremented from 1 to 2.
+9 : when again eden space is filled up then again minor Gc is triggered but this time s1 has differently  age objcet but s0 is empty.
+10: unrefernced object from eden space is deleted.
+11: refernced object are moved from eden to s0 to s1 and age is incremented 0 to 1 , 1 to 2 and 2 to 3.
+12: PROMOTION : when aged object in s0 or s1  reaches threshold ages supose 8 then during minor Gc these aged object will move from young generation to old generation.
+13: when old generation is full then " major gc is triggered" by jvm . 
+14: Once the old generation memory spaces becomes full, then garbage collection process runs on old generation memory space. But this time the garbage collector takes long time to run as compared to younger generations.

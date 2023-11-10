@@ -62,7 +62,7 @@ public class CourseService {
         return request;
     }
 
-    
+
     public InstructorRequestToMany getById(Long id) {
         Optional<InstructorEntity> optionalInstructorEntity = instructorRepository.findById(id);
         if (optionalInstructorEntity.isPresent()){
@@ -99,7 +99,7 @@ public class CourseService {
         for (CourseEntity entity : instructorEntity.getCourses()){
             CourseRequest courseRequest = new CourseRequest();
             courseRequest.setId(entity.getId());
-            courseRequest.setTitle(entity.getTitle());
+            courseRequest.setTitle(entity.getTitleName());
             courseRequestsList.add(courseRequest);
         }
         instructorRequest.setCourses(courseRequestsList);
@@ -119,7 +119,7 @@ public class CourseService {
         List<CourseEntity> courseEntities = new ArrayList<>();
         for (CourseRequest course : instructorRequest.getCourses()){
             CourseEntity courseEntity = new CourseEntity();
-            courseEntity.setTitle(course.getTitle());
+            courseEntity.setTitleName(course.getTitle());
             courseEntity.setInstructor(instructorEntity);
             courseEntities.add(courseEntity);
         }
@@ -144,7 +144,7 @@ public class CourseService {
         for (CourseRequest course : request.getCourses()){
             CourseEntity courseEntity = new CourseEntity();
             courseEntity.setId(course.getId());
-            courseEntity.setTitle(course.getTitle());
+            courseEntity.setTitleName(course.getTitle());
             courseEntity.setInstructor(instructorEntity);
             courseEntities.add(courseEntity);
         }
